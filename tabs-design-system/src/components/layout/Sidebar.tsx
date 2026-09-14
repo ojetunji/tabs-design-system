@@ -16,6 +16,7 @@ import {
   CursorClick,
   Textbox,
   CaretDown,
+  HouseLine,
   CheckCircle,
   UploadSimple
 } from '@phosphor-icons/react';
@@ -25,6 +26,14 @@ export default function Sidebar() {
   const pathname = usePathname();
 
   const navSections = [
+
+    // Standalone top-level item without a section title header
+  {
+    title: null, // or omit the title property if your sidebar maps it conditionally
+    items: [
+      { name: 'Home', href: '/', icon: HouseLine },
+    ],
+  },
     {
       title: 'Foundations',
       items: [

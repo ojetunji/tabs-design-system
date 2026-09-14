@@ -1,155 +1,102 @@
 'use client';
 
+import React, { useEffect } from 'react';
 import Link from 'next/link';
 import { ArrowRight } from '@phosphor-icons/react';
+import { useDesignSystem } from '@/context/DesignSystemContext';
 
-export default function HomeDashboard() {
+export default function DiscoveryPage() {
+  const { setCodeSnippet, setComponentTitle, setComponentCategory } = useDesignSystem();
+
+  useEffect(() => {
+    setCodeSnippet('');
+    setComponentTitle('');
+    setComponentCategory('');
+  }, [setCodeSnippet, setComponentTitle, setComponentCategory]);
+
   return (
-    <div className="max-w-6xl mx-auto flex flex-col gap-8 pb-16">
-      
-      {/* Hero Intro */}
-      <div className="flex flex-col gap-2">
-        <h1 className="text-3xl font-bold tracking-tight text-zinc-900 dark:text-white" style={{ fontFamily: 'var(--font-display)' }}>
-          Tabs Design System
+    <div className="w-full max-w-3xl mx-auto pt-20 pb-28 px-6 md:px-10 space-y-10 text-zinc-900 dark:text-zinc-100 font-sans">
+      {/* Breadcrumb */}
+      <div className="flex items-center gap-2 text-xs text-zinc-500 dark:text-zinc-400">
+        <span>Tabs</span>
+        <span>/</span>
+        <span className="text-zinc-900 dark:text-zinc-100 font-medium">Introduction</span>
+      </div>
+
+      {/* Main Title & Lead */}
+      <div className="space-y-3">
+        <h1 className="text-4xl font-extrabold tracking-tight text-zinc-900 dark:text-zinc-50">
+          Introduction
         </h1>
-        <p className="text-sm text-zinc-500 dark:text-zinc-400 max-w-2xl leading-relaxed">
-          A living, self-hosted product library and design system built from scratch. Hand-coded components bridging exact Figma tokens to practice production-ready React, TypeScript, and Tailwind code.
+        <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
+          Specs, micro-interactions, and token details often gets lost between Figma and the codebase. I built this as an extention of Tabs to fix that gap for myself. It is a living, self-hosted product library and design system built completely from scratch, serving as a direct bridge between precise design tokens and production-ready React, TypeScript, and Tailwind code.
         </p>
       </div>
 
-      {/* Bento Grid Layout */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        
-        {/* Card 1: Foundations (Spans 2 cols) */}
-        <div className="md:col-span-2 group border border-zinc-200 dark:border-zinc-800 rounded-3xl p-8 bg-white dark:bg-zinc-900 hover:border-zinc-300 dark:hover:border-zinc-700 transition flex flex-col justify-between shadow-xs">
-          <div className="flex flex-col gap-6">
-            <div className="w-20 h-20 relative">
-              <img src="/images/foundations.svg" alt="Foundations" className="w-full h-full object-contain group-hover:scale-105 transition duration-300" />
-            </div>
+      <p className="text-sm text-zinc-900 dark:text-zinc-100 leading-relaxed">
+        This started as an intentional learning journey. It became my personal sandbox to explore how far frontend engineering can go when you build out component, token, and state specs with your own hands rather than relying on heavy third-party dependencies.
+      </p>
 
-            <div>
-              <h2 className="text-2xl font-bold text-zinc-900 dark:text-white" style={{ fontFamily: 'var(--font-display)' }}>Foundations</h2>
-              <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1">Core visual style variables and design tokens.</p>
-            </div>
+      {/* Core Philosophy Section */}
+      <div className="space-y-4 pt-2 text-zinc-600 dark:text-zinc-400 leading-relaxed text-sm">
+        <p>
+          Flipping that script by keeping full source control right in the repository. It has taught me how to architect systems where design and code speak the exact same language, anchored by a few guiding principles:
+        </p>
 
-            <div className="flex flex-wrap gap-2 pt-2">
-              <Link href="/foundations/colors" className="text-xs font-medium bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 hover:border-zinc-400 dark:hover:border-zinc-500 px-3 py-1.5 rounded-lg text-zinc-700 dark:text-zinc-300 transition shadow-xs flex items-center gap-1.5">
-                Colors & Palettes <ArrowRight size={12} />
-              </Link>
-              <Link href="/foundations/typography" className="text-xs font-medium bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 hover:border-zinc-400 dark:hover:border-zinc-500 px-3 py-1.5 rounded-lg text-zinc-700 dark:text-zinc-300 transition shadow-xs flex items-center gap-1.5">
-                Typography <ArrowRight size={12} />
-              </Link>
-              <Link href="/foundations/spacing" className="text-xs font-medium bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 hover:border-zinc-400 dark:hover:border-zinc-500 px-3 py-1.5 rounded-lg text-zinc-700 dark:text-zinc-300 transition shadow-xs flex items-center gap-1.5">
-                Spacing & Layout <ArrowRight size={12} />
-              </Link>
-              <Link href="/foundations/elevation" className="text-xs font-medium bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 hover:border-zinc-400 dark:hover:border-zinc-500 px-3 py-1.5 rounded-lg text-zinc-700 dark:text-zinc-300 transition shadow-xs flex items-center gap-1.5">
-                Elevation & Shadows <ArrowRight size={12} />
-              </Link>
-            </div>
+        <ul className="list-disc pl-5 space-y-2 pt-2">
+          <li>
+            <strong className="text-zinc-900 dark:text-zinc-100 font-semibold">Transparency:</strong> Every component layer is completely open, unstyled, and inspectable right from the code drawer in a way I can understand and tweak as needed. Also allows for easy import and use in other projects.
+          </li>
+          <li>
+            <strong className="text-zinc-900 dark:text-zinc-100 font-semibold">Token-First Architecture:</strong> Sizing scales, typography, and layout states map directly back to foundational system variables rather than guessing.
+          </li>
+          <li>
+            <strong className="text-zinc-900 dark:text-zinc-100 font-semibold">Live Experimentation:</strong> Real-time parameters let me test component variants, scaling metrics, and edge cases instantly on the fly.
+          </li>
+          <li>
+            <strong className="text-zinc-900 dark:text-zinc-100 font-semibold">UX Intent:</strong> The library is informed by real-world product thinking—tailored for mobile-first constraints, high-density data views, and workflows.
+          </li>
+        </ul>
+      </div>
+
+      <hr className="border-zinc-200 dark:border-zinc-800 my-8" />
+
+      {/* Platform Anatomy Header */}
+      <div className="space-y-4">
+        <h2 className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50" id="anatomy">
+          Platform Anatomy
+        </h2>
+        <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
+          To make engineering handoffs seamless and keep the feedback loop as tight as possible, the interface is structured around three core controls:
+        </p>
+
+        <div className="space-y-6 pt-2 text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
+          <div>
+            <h3 className="font-semibold text-zinc-900 dark:text-zinc-100 mb-1">1. Navigation Header</h3>
+            <p>Your command center for the workspace. It lets you toggle background grid matrices, haptic audio feedback, theme synchronization, and code inspection views on the fly.</p>
+          </div>
+
+          <div>
+            <h3 className="font-semibold text-zinc-900 dark:text-zinc-100 mb-1">2. Live Code Drawer</h3>
+            <p>A sliding drawer that strips away the abstraction, revealing the exact TSX implementations and Tailwind utility classes for whatever component you are looking at.</p>
+          </div>
+
+          <div>
+            <h3 className="font-semibold text-zinc-900 dark:text-zinc-100 mb-1">3. Inspector Panel</h3>
+            <p>An interactive sidebar designed for live-tweaking. It lets you adjust token parameters, sizing scales, and component states in real-time to see how variations hold up under pressure.</p>
           </div>
         </div>
+      </div>
 
-        {/* Card 2: Atoms */}
-        <div className="border border-zinc-200 dark:border-zinc-800 rounded-3xl p-8 bg-white dark:bg-zinc-900 hover:border-zinc-300 dark:hover:border-zinc-700 transition flex flex-col justify-between group shadow-xs">
-          <div className="flex flex-col gap-6">
-            <div className="w-16 h-16 relative">
-              <img src="/images/atoms.svg" alt="Atoms" className="w-full h-full object-contain group-hover:scale-105 transition duration-300" />
-            </div>
-
-            <div>
-              <h2 className="text-xl font-bold text-zinc-900 dark:text-white" style={{ fontFamily: 'var(--font-display)' }}>Atoms</h2>
-              <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1">Fundamental building blocks.</p>
-            </div>
-
-            <div className="flex flex-wrap gap-2 pt-2">
-              <Link href="/atoms/buttons" className="text-xs font-medium bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 hover:border-zinc-400 dark:hover:border-zinc-500 px-3 py-1.5 rounded-lg text-zinc-700 dark:text-zinc-300 transition shadow-xs flex items-center gap-1.5">
-                Buttons <ArrowRight size={12} />
-              </Link>
-              <Link href="/atoms/inputs" className="text-xs font-medium bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 hover:border-zinc-400 dark:hover:border-zinc-500 px-3 py-1.5 rounded-lg text-zinc-700 dark:text-zinc-300 transition shadow-xs flex items-center gap-1.5">
-                Inputs <ArrowRight size={12} />
-              </Link>
-              <Link href="/atoms/badges" className="text-xs font-medium bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 hover:border-zinc-400 dark:hover:border-zinc-500 px-3 py-1.5 rounded-lg text-zinc-700 dark:text-zinc-300 transition shadow-xs flex items-center gap-1.5">
-                Badges <ArrowRight size={12} />
-              </Link>
-              <Link href="/atoms/icons" className="text-xs font-medium bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 hover:border-zinc-400 dark:hover:border-zinc-500 px-3 py-1.5 rounded-lg text-zinc-700 dark:text-zinc-300 transition shadow-xs flex items-center gap-1.5">
-                Icons <ArrowRight size={12} />
-              </Link>
-            </div>
-          </div>
-        </div>
-
-        {/* Card 3: Molecules */}
-        <div className="border border-zinc-200 dark:border-zinc-800 rounded-3xl p-8 bg-white dark:bg-zinc-900 hover:border-zinc-300 dark:hover:border-zinc-700 transition flex flex-col justify-between group shadow-xs">
-          <div className="flex flex-col gap-6">
-            <div className="w-16 h-16 relative">
-              <img src="/images/molecules.svg" alt="Molecules" className="w-full h-full object-contain group-hover:scale-105 transition duration-300" />
-            </div>
-
-            <div>
-              <h2 className="text-xl font-bold text-zinc-900 dark:text-white" style={{ fontFamily: 'var(--font-display)' }}>Molecules</h2>
-              <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1">Simple grouped components.</p>
-            </div>
-
-            <div className="flex flex-wrap gap-2 pt-2">
-              <Link href="/molecules/search-bar" className="text-xs font-medium bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 hover:border-zinc-400 dark:hover:border-zinc-500 px-3 py-1.5 rounded-lg text-zinc-700 dark:text-zinc-300 transition shadow-xs flex items-center gap-1.5">
-                Search Bar <ArrowRight size={12} />
-              </Link>
-              <Link href="/molecules/form-group" className="text-xs font-medium bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 hover:border-zinc-400 dark:hover:border-zinc-500 px-3 py-1.5 rounded-lg text-zinc-700 dark:text-zinc-300 transition shadow-xs flex items-center gap-1.5">
-                Form Groups <ArrowRight size={12} />
-              </Link>
-            </div>
-          </div>
-        </div>
-
-        {/* Card 4: Organisms */}
-        <div className="border border-zinc-200 dark:border-zinc-800 rounded-3xl p-8 bg-white dark:bg-zinc-900 hover:border-zinc-300 dark:hover:border-zinc-700 transition flex flex-col justify-between group shadow-xs">
-          <div className="flex flex-col gap-6">
-            <div className="w-16 h-16 relative">
-              <img src="/images/organisms.svg" alt="Organisms" className="w-full h-full object-contain group-hover:scale-105 transition duration-300" />
-            </div>
-
-            <div>
-              <h2 className="text-xl font-bold text-zinc-900 dark:text-white" style={{ fontFamily: 'var(--font-display)' }}>Organisms</h2>
-              <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1">Complex modular layout sections.</p>
-            </div>
-
-            <div className="flex flex-wrap gap-2 pt-2">
-              <Link href="/organisms/navbars" className="text-xs font-medium bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 hover:border-zinc-400 dark:hover:border-zinc-500 px-3 py-1.5 rounded-lg text-zinc-700 dark:text-zinc-300 transition shadow-xs flex items-center gap-1.5">
-                Navbars <ArrowRight size={12} />
-              </Link>
-              <Link href="/organisms/data-tables" className="text-xs font-medium bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 hover:border-zinc-400 dark:hover:border-zinc-500 px-3 py-1.5 rounded-lg text-zinc-700 dark:text-zinc-300 transition shadow-xs flex items-center gap-1.5">
-                Data Tables <ArrowRight size={12} />
-              </Link>
-              <Link href="/organisms/modals" className="text-xs font-medium bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 hover:border-zinc-400 dark:hover:border-zinc-500 px-3 py-1.5 rounded-lg text-zinc-700 dark:text-zinc-300 transition shadow-xs flex items-center gap-1.5">
-                Modals <ArrowRight size={12} />
-              </Link>
-            </div>
-          </div>
-        </div>
-
-        {/* Card 5: Templates & Pages */}
-        <div className="border border-zinc-200 dark:border-zinc-800 rounded-3xl p-8 bg-white dark:bg-zinc-900 hover:border-zinc-300 dark:hover:border-zinc-700 transition flex flex-col justify-between group shadow-xs">
-          <div className="flex flex-col gap-6">
-            <div className="w-16 h-16 relative">
-              <img src="/images/templates.svg" alt="Templates" className="w-full h-full object-contain group-hover:scale-105 transition duration-300" />
-            </div>
-
-            <div>
-              <h2 className="text-xl font-bold text-zinc-900 dark:text-white" style={{ fontFamily: 'var(--font-display)' }}>Templates & Pages</h2>
-              <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1">Full screen structural layouts.</p>
-            </div>
-
-            <div className="flex flex-wrap gap-2 pt-2">
-              <Link href="/templates-pages/layouts" className="text-xs font-medium bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 hover:border-zinc-400 dark:hover:border-zinc-500 px-3 py-1.5 rounded-lg text-zinc-700 dark:text-zinc-300 transition shadow-xs flex items-center gap-1.5">
-                Full Layouts <ArrowRight size={12} />
-              </Link>
-              <Link href="/templates-pages/case-studies" className="text-xs font-medium bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 hover:border-zinc-400 dark:hover:border-zinc-500 px-3 py-1.5 rounded-lg text-zinc-700 dark:text-zinc-300 transition shadow-xs flex items-center gap-1.5">
-                Case Studies <ArrowRight size={12} />
-              </Link>
-            </div>
-          </div>
-        </div>
-
+      {/* Call to action footer link */}
+      <div className="pt-6">
+        <Link 
+          href="/foundations/typography"
+          className="inline-flex items-center gap-2 text-sm font-semibold text-zinc-900 dark:text-zinc-100 hover:underline"
+        >
+          <span>Get started</span>
+          <ArrowRight weight="bold" className="w-4 h-4" />
+        </Link>
       </div>
     </div>
   );

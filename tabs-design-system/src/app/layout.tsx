@@ -73,7 +73,7 @@ function AppShell({ children }: { children: React.ReactNode }) {
           onToggleTheme={toggleTheme}
         />
         
-        <main 
+        {/* <main 
           className={`flex-1 overflow-y-auto relative flex items-center justify-center p-8 md:p-12 transition-all ${
             showGrid 
               ? 'bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] dark:bg-[radial-gradient(#27272a_1px,transparent_1px)] [background-size:20px_20px]' 
@@ -81,6 +81,18 @@ function AppShell({ children }: { children: React.ReactNode }) {
           }`}
         >
           <div className="w-full max-w-3xl flex items-center justify-center">
+            {children}
+          </div>
+        </main> */}
+
+        <main 
+          className={`flex-1 overflow-y-auto relative p-8 md:p-12 transition-all ${
+            showGrid 
+              ? 'bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] dark:bg-[radial-gradient(#27272a_1px,transparent_1px)] [background-size:20px_20px]' 
+              : ''
+          }`}
+        >
+          <div className="w-full max-w-3xl">
             {children}
           </div>
         </main>

@@ -90,7 +90,7 @@ export default function Header({
         {/* Left Side: Star on GitHub link */}
         <div className="flex items-center">
           <a
-            href="https://github.com/ojetunji"
+            href="https://github.com/ojetunji/tabs-design-system"
             target="_blank"
             rel="noreferrer"
             className="flex items-center gap-1.5 text-xs font-medium text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition cursor-pointer group"
