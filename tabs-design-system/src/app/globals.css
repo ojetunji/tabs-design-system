@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@font-face {
+  font-family: 'Creato Display';
+  src: url('/fonts/CreatoDisplay-Regular.woff2') format('woff2');
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Mona Sans';
+  src: url('/fonts/MonaSans-Regular.woff2') format('woff2');
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --font-display: 'Creato Display', sans-serif;
+  --font-sans: 'Mona Sans', sans-serif;
+  
+  --bg-primary: #FFFFFF;
+  --text-primary: #09090B;
+  --border-color: #E4E4E7;
+}
+
+.dark {
+  --bg-primary: #09090B;
+  --text-primary: #FAFAFA;
+  --border-color: #27272A;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  margin: 0;
+  padding: 0;
+}
