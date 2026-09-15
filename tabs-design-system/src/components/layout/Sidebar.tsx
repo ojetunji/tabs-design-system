@@ -46,7 +46,7 @@ export default function Sidebar() {
       items: [
       { name: 'Buttons', href: '/components/buttons', icon: CursorClick },
       { name: 'Input Fields', href: '/components/input', icon: Textbox },
-      { name: 'Multi-Select', href: '/components/dropdowns', icon: CheckCircle },
+      { name: 'Multi-Select', href: '/components/multi-select', icon: CheckCircle },
       // { name: 'File Upload', href: '/components/file-upload', icon: UploadSimple },
       ],
     },
