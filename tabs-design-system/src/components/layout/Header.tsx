@@ -16,6 +16,7 @@ import {
   CursorClick,
   Textbox,
   CaretDown,
+  GithubLogo,
   UploadSimple,
   CheckCircle,
   DotsNine
@@ -88,7 +89,7 @@ export default function Header({
       <header className="flex items-center justify-between px-8 py-3.5 bg-transparent z-20 min-h-[60px] select-none">
         
         {/* Left Side: Star on GitHub link */}
-        <div className="flex items-center">
+        {/* <div className="flex items-center">
           <a
             href="https://github.com/ojetunji/tabs-design-system"
             target="_blank"
@@ -98,7 +99,20 @@ export default function Header({
             <span>Star on GitHub</span>
             <ArrowUpRight size={14} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </a>
-        </div>
+        </div> */}
+<div className="flex items-center">
+  <a
+    href="https://github.com/ojetunji/tabs-design-system"
+    target="_blank"
+    rel="noreferrer"
+    className="flex items-center gap-2 px-3 py-1.5 bg-zinc-100 dark:bg-zinc-800/80 border border-zinc-200 dark:border-zinc-700/80 rounded-md text-xs font-medium text-zinc-800 dark:text-zinc-200 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-all cursor-pointer group shadow-xs"
+  >
+    <GithubLogo size={14} weight="regular" className="text-zinc-700 dark:text-zinc-300" />
+    <span>Star on GitHub</span>
+    <ArrowUpRight size={14} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 text-zinc-500 dark:text-zinc-400" />
+  </a>
+</div>
+
 
         {/* Right Side: Command Toolbar Icons */}
         <div className="flex items-center gap-1 text-zinc-500 dark:text-zinc-400">

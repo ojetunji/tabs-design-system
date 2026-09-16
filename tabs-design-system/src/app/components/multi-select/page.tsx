@@ -55,9 +55,9 @@ export default function MultiSelectPage() {
         { prop: 'Variant', type: 'enum', defaultVal: variant },
       ],
       compositionNotes: [
-        'Trigger button matches 100px rounded pill button specifications.',
-        'Selected options automatically jump to the top of the list.',
-        'Popover height dynamically hugs content.'
+        'Standard outline button to a blue selection badge summarising active items.',
+        'Options dynamically sort to the top of the results list for faster management.',
+        'Built-in search input filters screen options dynamically as you type inside the dropdown popover.'
       ],
     });
 

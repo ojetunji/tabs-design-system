@@ -240,11 +240,11 @@ export const MultiSelect = ({
           position: absolute;
           top: calc(100% + 8px);
           left: 0;
-          width: 360px;
+          width: 320px;
           background: #262626;
           box-shadow: 0px 24px 50px -12px rgba(45, 54, 67, 0.12);
           border-radius: 24px;
-          padding: 16px;
+          padding: 12px;
           z-index: 50;
           display: flex;
           flex-direction: column;
@@ -268,8 +268,8 @@ export const MultiSelect = ({
           display: flex;
           align-items: center;
           gap: 12px;
-          width: 328px;
-          height: 46px;
+          width: fill;
+          height: 44px;
           background: rgba(255, 255, 255, 0.08);
           border: 1px solid #3F3F46;
           border-radius: 24px;
@@ -306,28 +306,30 @@ export const MultiSelect = ({
           gap: 8px;
           overflow-y: auto;
           overflow-x: hidden; /* Disable horizontal scroll completely */
-          max-height: 160px; /* Exactly 4 items visible */
+          max-height: 200px; /* Exactly 4 items visible */
           padding-right: 2px;
           
           /* Hide scrollbars for Firefox & WebKit */
           scrollbar-width: none;
           -webkit-overflow-scrolling: touch;
           
-          /* Gradient fade mask for smooth vertical edges */
-          -webkit-mask-image: linear-gradient(
-            to bottom,
-            transparent 0%,
-            black 15%,
-            black 85%,
-            transparent 100%
-          );
-          mask-image: linear-gradient(
-            to bottom,
-            transparent 0%,
-            black 15%,
-            black 85%,
-            transparent 100%
-          );
+        //   /* Gradient fade mask for smooth vertical edges */
+        //   -webkit-mask-image: linear-gradient(
+        //     to bottom,
+        //     transparent 0%,
+        //     black 15%,
+        //     black 85%,
+        //     transparent 100%
+        //   );
+        //   mask-image: linear-gradient(
+        //     to bottom,
+        //     transparent 0%,
+        //     black 15%,
+        //     black 85%,
+        //     transparent 100%
+        //   );
+        -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+          mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
         }
 
         .multiselect-options-list::-webkit-scrollbar {
@@ -338,7 +340,7 @@ export const MultiSelect = ({
           display: flex;
           align-items: center;
           justify-content: space-between;
-          width: 328px;
+          width: fill;
           height: 44px;
           padding: 6px 12px;
           border-radius: 12px;

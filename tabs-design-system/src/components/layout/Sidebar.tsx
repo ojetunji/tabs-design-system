@@ -18,7 +18,9 @@ import {
   CaretDown,
   HouseLine,
   CheckCircle,
-  UploadSimple
+  Notification,
+  UploadSimple,
+  Tabs
 } from '@phosphor-icons/react';
 
 export default function Sidebar() {
@@ -47,7 +49,9 @@ export default function Sidebar() {
       { name: 'Buttons', href: '/components/buttons', icon: CursorClick },
       { name: 'Input Fields', href: '/components/input', icon: Textbox },
       { name: 'Multi-Select', href: '/components/multi-select', icon: CheckCircle },
-      // { name: 'File Upload', href: '/components/file-upload', icon: UploadSimple },
+      { name: 'Tabs', href: '/components/tabs', icon: Tabs },
+      { name: 'Toast', href: '/components/toast', icon: Notification },
+      { name: 'Dropdown', href: '/components/dropdown', icon: List}
       ],
     },
   ];

@@ -33,7 +33,7 @@ export default function CodeDrawer({
   if (!isOpen) return null;
 
   return (
-    <div className="absolute bottom-0 left-0 right-0 z-40 bg-white dark:bg-zinc-900 border-t border-zinc-200 dark:border-zinc-800 shadow-2xl transition-all duration-300 flex flex-col max-h-[45vh]">
+    <div className="absolute bottom-0 left-0 right-0 z-40 bg-white dark:bg-zinc-900 border-t border-zinc-200 dark:border-zinc-800 shadow-2xl transition-all duration-300 flex flex-col max-h-[32vh]">
       
       {/* Compact Drawer Header Toolbar */}
       <div className="flex items-center justify-between px-6 py-2.5 border-b border-zinc-200 dark:border-zinc-800 bg-zinc-50/80 dark:bg-zinc-950/40 select-none">
