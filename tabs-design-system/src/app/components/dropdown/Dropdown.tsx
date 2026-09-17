@@ -16,7 +16,8 @@ import {
   Plus,
   GearSix,
   Sun,
-  Moon
+  Moon,
+  CaretDown
 } from '@phosphor-icons/react';
 import { sounds } from '@/lib/sounds';
 
@@ -53,9 +54,14 @@ export function IconDropdown() {
         }}
         className="w-10 h-10 rounded-full bg-white border border-[#E5E5E5] dark:bg-zinc-800 dark:border-zinc-700 flex items-center justify-center text-[#333333] dark:text-zinc-200 hover:bg-[#F7F7F7] dark:hover:bg-zinc-700 transition-colors cursor-pointer"
       >
-        <motion.div animate={{ rotate: isOpen ? 90 : 0 }} transition={{ duration: 0.2 }}>
+        {/* <motion.div animate={{ rotate: isOpen ? 90 : 0 }} transition={{ duration: 0.2 }}>
           {isOpen ? <X size={18} weight="bold" /> : <DotsThreeVertical size={18} weight="bold" />}
-        </motion.div>
+        </motion.div> */}
+        {isOpen ? (
+  <CaretUp size={18} className="text-[#333333] dark:text-zinc-300" />
+) : (
+  <CaretDown size={18} className="text-[#333333] dark:text-zinc-300" />
+)}
       </button>
 
       <AnimatePresence>
@@ -66,7 +72,7 @@ export function IconDropdown() {
             exit={{ opacity: 0, y: 4, scale: 0.96 }}
             transition={{ type: 'spring', stiffness: 400, damping: 30 }}
             style={{ width: '280px', height: '164px', background: '#262626', boxShadow: '0px 24px 50px -12px rgba(45, 54, 67, 0.12)' }}
-            className="absolute right-0 mt-[12px] rounded-[24px] p-4 flex flex-col gap-3 z-50 text-white overflow-hidden origin-top"
+            className="absolute right-0 mt-[6px] rounded-[24px] p-4 flex flex-col gap-3 z-50 text-white overflow-hidden origin-top"
           >
             <div className="flex flex-col gap-1 w-[248px]">
               {/* Visit website */}
@@ -121,7 +127,7 @@ export function AvatarDropdown() {
   return (
     <div className="relative inline-block font-['Mona_Sans']" ref={ref}>
       {/* 32x32px Circular Avatar Trigger */}
-      <button
+      {/* <button
         onClick={() => {
           setIsOpen(!isOpen);
           sounds.playClick();
@@ -131,7 +137,21 @@ export function AvatarDropdown() {
         <div className="w-full h-full bg-[#0074FC] text-white font-semibold text-xs flex items-center justify-center">
           HZ
         </div>
-      </button>
+      </button> */}
+
+<button
+  onClick={() => {
+    setIsOpen(!isOpen);
+    sounds.playClick();
+  }}
+  className="w-[40px] h-[40px] rounded-full overflow-hidden focus:outline-none cursor-pointer transition-transform active:scale-95"
+>
+  <img 
+    src="/avatar.png" 
+    alt="User Avatar" 
+    className="w-full h-full object-cover"
+  />
+</button>
 
       <AnimatePresence>
         {isOpen && (
@@ -141,13 +161,16 @@ export function AvatarDropdown() {
             exit={{ opacity: 0, y: 4, scale: 0.96 }}
             transition={{ type: 'spring', stiffness: 400, damping: 30 }}
             style={{ width: '310px', maxHeight: '340px', background: '#262626', boxShadow: '0px 24px 50px -12px rgba(45, 54, 67, 0.12)' }}
-            className="absolute right-0 mt-[12px] rounded-[24px] p-4 flex flex-col gap-3 z-50 text-white overflow-y-auto origin-top"
+            className="absolute right-0 mt-[6px] rounded-[24px] p-4 flex flex-col gap-3 z-50 text-white overflow-y-auto origin-top"
           >
             {/* Header Profile Info */}
             <div className="flex items-center gap-3 w-[278px] h-[40px] shrink-0">
-              <div className="w-[40px] h-[40px] rounded-full bg-[#0074FC] text-white font-semibold text-sm flex items-center justify-center shrink-0">
+              {/* <div className="w-[40px] h-[40px] rounded-full bg-[#0074FC] text-white font-semibold text-sm flex items-center justify-center shrink-0">
                 HZ
-              </div>
+              </div> */}
+              <div className="w-[40px] h-[40px] rounded-full overflow-hidden shrink-0 border border-zinc-700">
+    <img src="/avatar.png" alt="User Avatar" className="w-full h-full object-cover" />
+  </div>
               <div className="flex flex-col justify-center gap-0.5">
                 <span className="font-['Creato_Display'] font-medium text-[14px] leading-[20px] text-white tracking-[-0.02em]">
                   Hannah Zighan
@@ -278,12 +301,17 @@ export function InputDropdown() {
         <span className={`text-sm font-medium ${selectedRole ? 'text-[#333333] dark:text-zinc-100' : 'text-[#A3A3A3] dark:text-zinc-500'}`}>
           {selectedRole || 'Choose your role'}
         </span>
-        <motion.div
+        {/* <motion.div
           animate={{ rotate: isOpen ? 180 : 0 }}
           transition={{ type: 'spring', stiffness: 300, damping: 25 }}
         >
           <CaretUp size={18} className="text-[#333333] dark:text-zinc-300" />
-        </motion.div>
+        </motion.div> */}
+        {isOpen ? (
+  <CaretUp size={18} className="text-[#333333] dark:text-zinc-300" />
+) : (
+  <CaretDown size={18} className="text-[#333333] dark:text-zinc-300" />
+)}
       </button>
 
       <AnimatePresence>
@@ -293,7 +321,7 @@ export function InputDropdown() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 4, scale: 0.98 }}
             transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-            className="w-[320px] bg-white dark:bg-zinc-900 border border-[#E5E5E5] dark:border-zinc-800 rounded-2xl shadow-xl overflow-hidden p-1 flex flex-col gap-1 mt-[12px] z-50 absolute left-0 top-full origin-top"
+            className="w-[320px] bg-white dark:bg-zinc-900 border border-[#E5E5E5] dark:border-zinc-800 rounded-2xl shadow-xl overflow-hidden p-1 flex flex-col gap-1 mt-[6px] z-50 absolute left-0 top-full origin-top"
           >
             {ROLES.map((role) => {
               const isSelected = selectedRole === role;
@@ -302,7 +330,7 @@ export function InputDropdown() {
                   key={role}
                   onClick={() => {
                     setSelectedRole(role);
-                    setIsOpen(false);
+                    // setIsOpen(false);
                     sounds.playClick();
                   }}
                   className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl transition-colors cursor-pointer ${

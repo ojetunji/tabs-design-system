@@ -34,13 +34,13 @@ export default function DiscoveryPage() {
       </div>
 
       <p className="text-sm text-zinc-900 dark:text-zinc-100 leading-relaxed">
-        This started as an intentional learning journey. It became my personal sandbox to explore how far frontend engineering can go when you build out component, token, and state specs with your own hands rather than relying on heavy third-party dependencies.
+        This started as an intentional learning journey. It became my personal sandbox to explore how far I could go when component, token, and state specs are custom built rather than relying on heavy third-party dependencies.
       </p>
 
       {/* Core Philosophy Section */}
       <div className="space-y-4 pt-2 text-zinc-600 dark:text-zinc-400 leading-relaxed text-sm">
         <p>
-          Flipping that script by keeping full source control right in the repository. It has taught me how to architect systems where design and code speak the exact same language, anchored by a few guiding principles:
+          Flipping the script by keeping full source control right in the platform. It has taught me how to create systems where design and code speak the exact same language, anchored by some guiding principles:
         </p>
 
         <ul className="list-disc pl-5 space-y-2 pt-2">
@@ -48,13 +48,13 @@ export default function DiscoveryPage() {
             <strong className="text-zinc-900 dark:text-zinc-100 font-semibold">Transparency:</strong> Every component layer is completely open, unstyled, and inspectable right from the code drawer in a way I can understand and tweak as needed. Also allows for easy import and use in other projects.
           </li>
           <li>
-            <strong className="text-zinc-900 dark:text-zinc-100 font-semibold">Token-First Architecture:</strong> Sizing scales, typography, and layout states map directly back to foundational system variables rather than guessing.
+            <strong className="text-zinc-900 dark:text-zinc-100 font-semibold">Token-First:</strong> Sizing scales, typography, and layout states map directly back to foundational system variables rather than guessing.
           </li>
           <li>
-            <strong className="text-zinc-900 dark:text-zinc-100 font-semibold">Live Experimentation:</strong> Real-time parameters let me test component variants, scaling metrics, and edge cases instantly on the fly.
+            <strong className="text-zinc-900 dark:text-zinc-100 font-semibold">Live Testing:</strong> Real-time parameters let me test component variants, scaling metrics, and edge cases instantly on the fly.
           </li>
           <li>
-            <strong className="text-zinc-900 dark:text-zinc-100 font-semibold">UX Intent:</strong> The library is informed by real-world product thinking—tailored for mobile-first constraints, high-density data views, and workflows.
+            <strong className="text-zinc-900 dark:text-zinc-100 font-semibold">UX Intent:</strong> The library is informed by real-world product thinking—tailored for constraints, custom views, and user flows.
           </li>
         </ul>
       </div>
@@ -67,23 +67,23 @@ export default function DiscoveryPage() {
           Platform Anatomy
         </h2>
         <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
-          To make engineering handoffs seamless and keep the feedback loop as tight as possible, the interface is structured around three core controls:
+          To make handoffs seamless and keep the feedback loop as tight as possible, this platform is structured around three core areas:
         </p>
 
         <div className="space-y-6 pt-2 text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
           <div>
             <h3 className="font-semibold text-zinc-900 dark:text-zinc-100 mb-1">1. Navigation Header</h3>
-            <p>Your command center for the workspace. It lets you toggle background grid matrices, haptic audio feedback, theme synchronization, and code inspection views on the fly.</p>
+            <p>Think of this as the command center for the workspace. Toggle background grid, haptic audio feedback, theme, and code inspection on the fly.</p>
           </div>
 
           <div>
             <h3 className="font-semibold text-zinc-900 dark:text-zinc-100 mb-1">2. Live Code Drawer</h3>
-            <p>A sliding drawer that strips away the abstraction, revealing the exact TSX implementations and Tailwind utility classes for whatever component you are looking at.</p>
+            <p>A sliding drawer that reveals the exact TypeScript (.tsx) implementation and utility classes for whichever component in view.</p>
           </div>
 
           <div>
             <h3 className="font-semibold text-zinc-900 dark:text-zinc-100 mb-1">3. Inspector Panel</h3>
-            <p>An interactive sidebar designed for live-tweaking. It lets you adjust token parameters, sizing scales, and component states in real-time to see how variations hold up under pressure.</p>
+            <p>An interactive sidebar designed for live-customisation, a playground if you will. Adjust tokens, sizing, and component states/variants in real-time.</p>
           </div>
         </div>
       </div>

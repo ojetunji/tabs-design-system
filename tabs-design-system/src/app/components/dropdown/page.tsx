@@ -37,13 +37,13 @@ export default function DropdownPage() {
       compositionNotes: [
         'Features spring-physics scaling transitions via Framer Motion.',
         'Supports single-select checkmark logic for form inputs.',
-        'Includes spatial audio triggers on interaction.'
+        // 'Includes spatial audio triggers on interaction.'
       ],
     });
 
     setCustomControls(
       <div className="flex flex-col gap-1.5">
-        <span className="text-xs text-zinc-700 dark:text-zinc-300">Dropdown Variant</span>
+        <span className="text-xs text-zinc-700 dark:text-zinc-300">Variants</span>
         <select
           value={variant}
           onChange={(e) => {
