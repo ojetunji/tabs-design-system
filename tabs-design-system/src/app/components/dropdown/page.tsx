@@ -18,7 +18,8 @@ export default function DropdownPage() {
     setCodeSnippet, 
     setComponentTitle, 
     setComponentCategory,
-    setComponentIcon 
+    setComponentIcon,
+    isCodeDrawerOpen 
   } = useDesignSystem();
 
   useEffect(() => {
@@ -89,5 +90,27 @@ return (
       </div>
     </PreviewCanvas>
   );
-
+// return (
+//   <PreviewCanvas>
+//     {/* Dynamic vertical positioning so it stays centered inside the reduced visible space when code drawer is open */}
+//     <div className={`relative w-full h-full flex flex-col items-center justify-center p-6 transition-all duration-300 ${
+//       isCodeDrawerOpen ? 'pb-40 pt-4' : ''
+//     }`}>
+//       {variant === 'input' && <InputDropdown />}
+//       {variant === 'icon' && <IconDropdown />}
+//       {variant === 'avatar' && <AvatarDropdown />}
+//     </div>
+//   </PreviewCanvas>
+// );
+// return (
+//   <PreviewCanvas align={isCodeDrawerOpen ? 'top' : 'center'}>
+//     <div className={`relative w-full h-full flex flex-col items-center p-6 transition-all duration-300 ${
+//       isCodeDrawerOpen ? 'pt-8' : 'justify-center'
+//     }`}>
+//       {variant === 'input' && <InputDropdown />}
+//       {variant === 'icon' && <IconDropdown />}
+//       {variant === 'avatar' && <AvatarDropdown />}
+//     </div>
+//   </PreviewCanvas>
+// );
 }
