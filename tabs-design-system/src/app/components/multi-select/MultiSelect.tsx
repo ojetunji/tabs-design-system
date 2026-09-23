@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
-import { CaretDown, MagnifyingGlass, Check, XCircle } from '@phosphor-icons/react';
+import { CaretDown, MagnifyingGlass, Check, XCircle, CaretUp } from '@phosphor-icons/react';
 
 export interface MultiSelectOption {
   id: string;
@@ -99,7 +99,12 @@ export const MultiSelect = ({
           className={`multiselect-trigger-default ${disabled ? 'disabled' : ''}`}
         >
           <span>{label}</span>
-          <CaretDown size={16} weight="regular" className={`transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
+          {/* <CaretDown size={16} weight="regular" className={`transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} /> */}
+          {isOpen ? (
+    <CaretUp size={16} weight="regular" />
+  ) : (
+    <CaretDown size={16} weight="regular" />
+  )}
         </button>
       ) : (
         <div 

@@ -9,7 +9,7 @@ import { MagnifyingGlass } from '@phosphor-icons/react';
 
 export default function InputPage() {
   const [selectedVariant, setSelectedVariant] = useState<InputVariant>('basic');
-  const [inputLabel, setInputLabel] = useState('Email address');
+  const [inputLabel, setInputLabel] = useState('Label');
   const [showLabel, setShowLabel] = useState(true);
   const [helpText, setHelpText] = useState('Info that helps a user with this field');
   const [showHelpText, setShowHelpText] = useState(true);

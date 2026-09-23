@@ -40,7 +40,7 @@ export default function Sidebar() {
       title: 'Foundations',
       items: [
         { name: 'Typography', href: '/foundations/typography', icon: TextT },
-        // { name: 'Color & Tokens', href: '/foundations/colors', icon: Palette },
+        { name: 'Color & Tokens', href: '/foundations/colors', icon: Palette },
       ],
     },
     {

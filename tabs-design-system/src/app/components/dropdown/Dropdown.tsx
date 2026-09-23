@@ -54,14 +54,14 @@ export function IconDropdown() {
         }}
         className="w-10 h-10 rounded-full bg-white border border-[#E5E5E5] dark:bg-zinc-800 dark:border-zinc-700 flex items-center justify-center text-[#333333] dark:text-zinc-200 hover:bg-[#F7F7F7] dark:hover:bg-zinc-700 transition-colors cursor-pointer"
       >
-        {/* <motion.div animate={{ rotate: isOpen ? 90 : 0 }} transition={{ duration: 0.2 }}>
+        <motion.div animate={{ rotate: isOpen ? 90 : 0 }} transition={{ duration: 0.2 }}>
           {isOpen ? <X size={18} weight="bold" /> : <DotsThreeVertical size={18} weight="bold" />}
-        </motion.div> */}
-        {isOpen ? (
+        </motion.div>
+        {/* {isOpen ? (
   <CaretUp size={18} className="text-[#333333] dark:text-zinc-300" />
 ) : (
   <CaretDown size={18} className="text-[#333333] dark:text-zinc-300" />
-)}
+)} */}
       </button>
 
       <AnimatePresence>
@@ -295,7 +295,7 @@ export function InputDropdown() {
           sounds.playClick();
         }}
         className={`w-[320px] h-[44px] px-4 bg-white dark:bg-zinc-900 border rounded-2xl flex items-center justify-between transition-colors cursor-pointer ${
-          isOpen ? 'border-[#0074FC]' : 'border-[#E5E5E5] dark:border-zinc-700 hover:border-[#D4D4D4]'
+          isOpen ? 'border-[#71717A]' : 'border-[#E5E5E5] dark:border-zinc-700 hover:border-[#D4D4D4]'
         }`}
       >
         <span className={`text-sm font-medium ${selectedRole ? 'text-[#333333] dark:text-zinc-100' : 'text-[#A3A3A3] dark:text-zinc-500'}`}>
@@ -328,10 +328,13 @@ export function InputDropdown() {
               return (
                 <button
                   key={role}
+                  // onClick={() => {
+                  //   setSelectedRole(role);
+                  //   // setIsOpen(false);
+                  //   sounds.playClick();
                   onClick={() => {
-                    setSelectedRole(role);
-                    // setIsOpen(false);
-                    sounds.playClick();
+                    // If it's already selected, uncheck/revert it to null. Otherwise, select it.
+                    setSelectedRole(isSelected ? null : role);
                   }}
                   className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl transition-colors cursor-pointer ${
                     isSelected ? 'bg-[#F7F7F7] dark:bg-zinc-800' : 'hover:bg-[#F7F7F7]/60 dark:hover:bg-zinc-800/60'

@@ -66,7 +66,7 @@ export default function TabsPage() {
       compositionNotes: [
         'Adjustable items up to 6 tabs with state management.',
         'Uses Framer Motion layoutId physics for buttery-smooth sliding transitions between active tabs.',
-        'Inactive tabs use subtle inner shadows and muted gray text, while active states elevate with a crisp white background and dark text.'
+        // 'Inactive tabs use subtle inner shadows and muted gray text, while active states elevate with a crisp white background and dark text.'
       ],
     });
 
@@ -74,7 +74,7 @@ export default function TabsPage() {
       <div className="flex flex-col gap-4">
         {/* Variant Selector */}
         <div className="flex flex-col gap-1.5">
-          <span className="text-xs text-zinc-700 dark:text-zinc-300">Component Variant</span>
+          <span className="text-xs text-zinc-700 dark:text-zinc-300">Variants</span>
           <select
             value={variant}
             onChange={(e) => {
@@ -93,7 +93,7 @@ export default function TabsPage() {
 
         {/* Item Count Selector */}
         <div className="flex flex-col gap-1.5">
-          <span className="text-xs text-zinc-700 dark:text-zinc-300">Number of Tabs (Max 6)</span>
+          <span className="text-xs text-zinc-700 dark:text-zinc-300">Number of Tabs</span>
           <select
             value={itemCount}
             onChange={(e) => {

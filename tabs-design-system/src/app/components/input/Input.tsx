@@ -19,7 +19,7 @@ interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, '
 }
 
 export const Input = ({
-  label = 'Email address',
+  label = 'Label',
   showLabel = true,
   helpText = 'Info that helps a user with this field',
   showHelpText = true,

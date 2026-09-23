@@ -19,7 +19,10 @@ import {
   GithubLogo,
   UploadSimple,
   CheckCircle,
-  DotsNine
+  DotsNine,
+  Tabs,
+  Notification,
+  List
 } from '@phosphor-icons/react';
 import { sounds } from '@/lib/sounds';
 
@@ -40,7 +43,9 @@ const searchableItems = [
   { name: 'Buttons', category: 'Components', href: '/components/buttons', icon: CursorClick },
   { name: 'Input Fields', category: 'Components', href: '/components/inputs', icon: Textbox },
   { name: 'Multi-Select', category: 'Components', href: '/components/dropdowns', icon: CheckCircle },
-  // { name: 'File Upload', category: 'Components', href: '/components/file-upload', icon: UploadSimple },
+  { name: 'Tabs', category: 'Components', href: '/components/tabs', icon: Tabs },
+  { name: 'Toast', category: 'Components', href: '/components/toast', icon: Notification },
+  { name: 'Dropdown', category: 'Components', href: '/components/dropdown', icon: List },
 ];
 
 export default function Header({ 
