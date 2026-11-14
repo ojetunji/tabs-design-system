@@ -21,18 +21,19 @@ export default function MultiSelectPage() {
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [isOpen, setIsOpen] = useState(false);
 
-  // Sync state when customizer variant dropdown changes
-  useEffect(() => {
-    if (variant === 'default') {
+  // Picking a variant in the customizer also sets the matching selection and open state.
+  const applyVariant = (next: 'default' | 'active' | 'selected') => {
+    setVariant(next);
+    if (next === 'default') {
       setSelectedIds([]);
       setIsOpen(false);
-    } else if (variant === 'active') {
+    } else if (next === 'active') {
       setIsOpen(true);
-    } else if (variant === 'selected') {
+    } else {
       setSelectedIds(['1', '6']);
       setIsOpen(false); // Popover closed for selected variant
     }
-  }, [variant]);
+  };
 
   const { 
     setInspectorContent, 
@@ -68,7 +69,7 @@ export default function MultiSelectPage() {
           <select
             value={variant}
             onChange={(e) => {
-              setVariant(e.target.value as 'default' | 'active' | 'selected');
+              applyVariant(e.target.value as 'default' | 'active' | 'selected');
               sounds.playClick();
             }}
             className="w-full h-[36px] bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-xl px-3 text-xs font-medium text-zinc-800 dark:text-zinc-200 focus:outline-none cursor-pointer"

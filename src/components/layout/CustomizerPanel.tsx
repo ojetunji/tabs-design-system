@@ -145,7 +145,7 @@ export default function CustomizerPanel({
 }
 
 // Helper check for React elements
-function isValidElement(element: unknown): element is React.ReactElement<{ value?: string; onChange?: (e: any) => void; children?: ReactNode }> {
+function isValidElement(element: unknown): element is React.ReactElement<{ value?: string; onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void; children?: ReactNode }> {
   return React.isValidElement(element);
 }
 

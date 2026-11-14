@@ -33,7 +33,9 @@ export default function TabsPage() {
   const activeTabs = currentTabsSource.slice(0, itemCount);
 
   // Default the active tab to the first item in the current slice
-  const [activeTabId, setActiveTabId] = useState(activeTabs[0].id);
+  const [selectedTabId, setActiveTabId] = useState(activeTabs[0].id);
+  // If the selected tab is no longer in the trimmed list, fall back to the first tab.
+  const activeTabId = activeTabs.some((tab) => tab.id === selectedTabId) ? selectedTabId : activeTabs[0].id;
 
   const { 
     setInspectorContent, 
@@ -43,13 +45,6 @@ export default function TabsPage() {
     setComponentCategory,
     setComponentIcon 
   } = useDesignSystem();
-
-  useEffect(() => {
-    // If the active tab ID is no longer within the trimmed item count, reset it to the first tab
-    if (!activeTabs.some((tab) => tab.id === activeTabId)) {
-      setActiveTabId(activeTabs[0].id);
-    }
-  }, [itemCount, variant]);
 
   useEffect(() => {
     setComponentTitle('Tabs');

@@ -84,7 +84,7 @@ export default function InputPage() {
           <select
             value={inputState}
             onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
-              setInputState(e.target.value as any);
+              setInputState(e.target.value as typeof inputState);
               sounds.playClick();
             }}
             className="w-full h-[42px] bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-xl px-3.5 text-xs text-zinc-900 dark:text-white focus:outline-none cursor-pointer"
