@@ -2,6 +2,7 @@
   "name": "tabs-design-system",
   "version": "0.1.0",
   "private": true,
+  "license": "MIT",
   "scripts": {
     "tokens": "node scripts/build-tokens.mjs",
     "tokens:figma": "node scripts/import-figma.mjs && npm run tokens",
