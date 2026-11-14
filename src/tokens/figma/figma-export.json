@@ -1,0 +1,1047 @@
+{
+  "styles": {
+    "colors": [
+      {
+        "name": "States/Error/50",
+        "token": "states-error-50",
+        "type": "solid"
+      },
+      {
+        "name": "States/Error/400",
+        "token": "states-error-400",
+        "type": "solid"
+      },
+      {
+        "name": "States/Error/200",
+        "token": "states-error-200",
+        "type": "solid"
+      },
+      {
+        "name": "States/Error/500",
+        "token": "states-error-500",
+        "type": "solid"
+      },
+      {
+        "name": "States/Error/600",
+        "description": "Dark mode",
+        "token": "states-error-600",
+        "type": "solid"
+      },
+      {
+        "name": "States/Error/950",
+        "token": "states-error-950",
+        "type": "solid"
+      },
+      {
+        "name": "States/Warning/50",
+        "token": "states-warning-50",
+        "type": "solid"
+      },
+      {
+        "name": "States/Warning/200",
+        "token": "states-warning-200",
+        "type": "solid"
+      },
+      {
+        "name": "States/Warning/400",
+        "description": "Dark mode",
+        "token": "states-warning-400",
+        "type": "solid"
+      },
+      {
+        "name": "States/Warning/500",
+        "description": "Base",
+        "token": "states-warning-500",
+        "type": "solid"
+      },
+      {
+        "name": "States/Warning/950",
+        "token": "states-warning-950",
+        "type": "solid"
+      },
+      {
+        "name": "States/Warning/600",
+        "description": "Dark mode",
+        "token": "states-warning-600",
+        "type": "solid"
+      },
+      {
+        "name": "States/Success/50",
+        "token": "states-success-50",
+        "type": "solid"
+      },
+      {
+        "name": "States/Success/200",
+        "token": "states-success-200",
+        "type": "solid"
+      },
+      {
+        "name": "States/Success/400",
+        "description": "Dark mode",
+        "token": "states-success-400",
+        "type": "solid"
+      },
+      {
+        "name": "States/Success/500",
+        "token": "states-success-500",
+        "type": "solid"
+      },
+      {
+        "name": "States/Success/600",
+        "description": "Dark mode",
+        "token": "states-success-600",
+        "type": "solid"
+      },
+      {
+        "name": "States/Success/950",
+        "token": "states-success-950",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Blue/25",
+        "token": "primary-tabs-blue-25",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Blue/50",
+        "token": "primary-tabs-blue-50",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Blue/100",
+        "token": "primary-tabs-blue-100",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Blue/200",
+        "token": "primary-tabs-blue-200",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Blue/300",
+        "token": "primary-tabs-blue-300",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Blue/Base",
+        "token": "primary-tabs-blue-base",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Blue/500",
+        "token": "primary-tabs-blue-500",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Blue/600",
+        "token": "primary-tabs-blue-600",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Blue/700",
+        "token": "primary-tabs-blue-700",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Blue/800",
+        "token": "primary-tabs-blue-800",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Blue/900",
+        "token": "primary-tabs-blue-900",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Cool Blue/25",
+        "token": "primary-tabs-cool-blue-25",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Cool Blue/50",
+        "token": "primary-tabs-cool-blue-50",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Cool Blue/100",
+        "token": "primary-tabs-cool-blue-100",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Cool Blue/200",
+        "token": "primary-tabs-cool-blue-200",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Cool Blue/300",
+        "token": "primary-tabs-cool-blue-300",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Cool Blue/Base",
+        "token": "primary-tabs-cool-blue-base",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Cool Blue/500",
+        "token": "primary-tabs-cool-blue-500",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Cool Blue/600",
+        "token": "primary-tabs-cool-blue-600",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Cool Blue/700",
+        "token": "primary-tabs-cool-blue-700",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Cool Blue/800",
+        "token": "primary-tabs-cool-blue-800",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Cool Blue/900",
+        "token": "primary-tabs-cool-blue-900",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Pink/25",
+        "token": "primary-tabs-pink-25",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Pink/50",
+        "token": "primary-tabs-pink-50",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Pink/100",
+        "token": "primary-tabs-pink-100",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Pink/200",
+        "token": "primary-tabs-pink-200",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Pink/300",
+        "token": "primary-tabs-pink-300",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Pink/Base",
+        "token": "primary-tabs-pink-base",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Pink/500",
+        "token": "primary-tabs-pink-500",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Pink/600",
+        "token": "primary-tabs-pink-600",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Pink/700",
+        "token": "primary-tabs-pink-700",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Pink/800",
+        "token": "primary-tabs-pink-800",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Pink/900",
+        "token": "primary-tabs-pink-900",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Orange/25",
+        "token": "primary-tabs-orange-25",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Orange/50",
+        "token": "primary-tabs-orange-50",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Orange/100",
+        "token": "primary-tabs-orange-100",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Orange/200",
+        "token": "primary-tabs-orange-200",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Orange/300",
+        "token": "primary-tabs-orange-300",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Orange/Base",
+        "token": "primary-tabs-orange-base",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Orange/500",
+        "token": "primary-tabs-orange-500",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Orange/600",
+        "token": "primary-tabs-orange-600",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Orange/700",
+        "token": "primary-tabs-orange-700",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Orange/800",
+        "token": "primary-tabs-orange-800",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Orange/900",
+        "token": "primary-tabs-orange-900",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Green/25",
+        "token": "primary-tabs-green-25",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Green/50",
+        "token": "primary-tabs-green-50",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Green/100",
+        "token": "primary-tabs-green-100",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Green/200",
+        "token": "primary-tabs-green-200",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Green/300",
+        "token": "primary-tabs-green-300",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Green/Base",
+        "token": "primary-tabs-green-base",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Green/500",
+        "token": "primary-tabs-green-500",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Green/600",
+        "token": "primary-tabs-green-600",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Green/700",
+        "token": "primary-tabs-green-700",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Green/800",
+        "token": "primary-tabs-green-800",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Green/900",
+        "token": "primary-tabs-green-900",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Mint/25",
+        "token": "primary-tabs-mint-25",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Mint/50",
+        "token": "primary-tabs-mint-50",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Mint/100",
+        "token": "primary-tabs-mint-100",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Mint/200",
+        "token": "primary-tabs-mint-200",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Mint/300",
+        "token": "primary-tabs-mint-300",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Mint/Base",
+        "token": "primary-tabs-mint-base",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Mint/500",
+        "token": "primary-tabs-mint-500",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Mint/600",
+        "token": "primary-tabs-mint-600",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Mint/700",
+        "token": "primary-tabs-mint-700",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Mint/800",
+        "token": "primary-tabs-mint-800",
+        "type": "solid"
+      },
+      {
+        "name": "Primary/Tabs Mint/900",
+        "token": "primary-tabs-mint-900",
+        "type": "solid"
+      },
+      {
+        "name": "Secondary/Green/25",
+        "token": "secondary-green-25",
+        "type": "solid"
+      },
+      {
+        "name": "Secondary/Green/50",
+        "token": "secondary-green-50",
+        "type": "solid"
+      },
+      {
+        "name": "Secondary/Green/100",
+        "token": "secondary-green-100",
+        "type": "solid"
+      },
+      {
+        "name": "Secondary/Green/200",
+        "token": "secondary-green-200",
+        "type": "solid"
+      },
+      {
+        "name": "Secondary/Green/300",
+        "token": "secondary-green-300",
+        "type": "solid"
+      },
+      {
+        "name": "Secondary/Green/400",
+        "token": "secondary-green-400",
+        "type": "solid"
+      },
+      {
+        "name": "Secondary/Green/Base",
+        "token": "secondary-green-base",
+        "type": "solid"
+      },
+      {
+        "name": "Secondary/Green/600",
+        "token": "secondary-green-600",
+        "type": "solid"
+      },
+      {
+        "name": "Secondary/Green/700",
+        "token": "secondary-green-700",
+        "type": "solid"
+      },
+      {
+        "name": "Secondary/Green/800",
+        "token": "secondary-green-800",
+        "type": "solid"
+      },
+      {
+        "name": "Secondary/Green/900",
+        "token": "secondary-green-900",
+        "type": "solid"
+      },
+      {
+        "name": "Secondary/Hot Pink/25",
+        "token": "secondary-hot-pink-25",
+        "type": "solid"
+      },
+      {
+        "name": "Secondary/Hot Pink/50",
+        "token": "secondary-hot-pink-50",
+        "type": "solid"
+      },
+      {
+        "name": "Secondary/Hot Pink/100",
+        "token": "secondary-hot-pink-100",
+        "type": "solid"
+      },
+      {
+        "name": "Secondary/Hot Pink/200",
+        "token": "secondary-hot-pink-200",
+        "type": "solid"
+      },
+      {
+        "name": "Secondary/Hot Pink/300",
+        "token": "secondary-hot-pink-300",
+        "type": "solid"
+      },
+      {
+        "name": "Secondary/Hot Pink/400",
+        "token": "secondary-hot-pink-400",
+        "type": "solid"
+      },
+      {
+        "name": "Secondary/Hot Pink/Base",
+        "token": "secondary-hot-pink-base",
+        "type": "solid"
+      },
+      {
+        "name": "Secondary/Hot Pink/600",
+        "token": "secondary-hot-pink-600",
+        "type": "solid"
+      },
+      {
+        "name": "Secondary/Hot Pink/700",
+        "token": "secondary-hot-pink-700",
+        "type": "solid"
+      },
+      {
+        "name": "Secondary/Hot Pink/800",
+        "token": "secondary-hot-pink-800",
+        "type": "solid"
+      },
+      {
+        "name": "Secondary/Hot Pink/900",
+        "token": "secondary-hot-pink-900",
+        "type": "solid"
+      },
+      {
+        "name": "Secondary/Purple/25",
+        "token": "secondary-purple-25",
+        "type": "solid"
+      },
+      {
+        "name": "Secondary/Purple/50",
+        "token": "secondary-purple-50",
+        "type": "solid"
+      },
+      {
+        "name": "Secondary/Purple/100",
+        "token": "secondary-purple-100",
+        "type": "solid"
+      },
+      {
+        "name": "Secondary/Purple/200",
+        "token": "secondary-purple-200",
+        "type": "solid"
+      },
+      {
+        "name": "Secondary/Purple/300",
+        "token": "secondary-purple-300",
+        "type": "solid"
+      },
+      {
+        "name": "Secondary/Purple/400",
+        "token": "secondary-purple-400",
+        "type": "solid"
+      },
+      {
+        "name": "Secondary/Purple/Base",
+        "token": "secondary-purple-base",
+        "type": "solid"
+      },
+      {
+        "name": "Secondary/Purple/600",
+        "token": "secondary-purple-600",
+        "type": "solid"
+      },
+      {
+        "name": "Secondary/Purple/700",
+        "token": "secondary-purple-700",
+        "type": "solid"
+      },
+      {
+        "name": "Secondary/Purple/800",
+        "token": "secondary-purple-800",
+        "type": "solid"
+      },
+      {
+        "name": "Secondary/Purple/900",
+        "token": "secondary-purple-900",
+        "type": "solid"
+      },
+      {
+        "name": "Secondary/Orange/25",
+        "token": "secondary-orange-25",
+        "type": "solid"
+      },
+      {
+        "name": "Secondary/Orange/50",
+        "token": "secondary-orange-50",
+        "type": "solid"
+      },
+      {
+        "name": "Secondary/Orange/100",
+        "token": "secondary-orange-100",
+        "type": "solid"
+      },
+      {
+        "name": "Secondary/Orange/200",
+        "token": "secondary-orange-200",
+        "type": "solid"
+      },
+      {
+        "name": "Secondary/Orange/300",
+        "token": "secondary-orange-300",
+        "type": "solid"
+      },
+      {
+        "name": "Secondary/Orange/400",
+        "token": "secondary-orange-400",
+        "type": "solid"
+      },
+      {
+        "name": "Secondary/Orange/Base",
+        "token": "secondary-orange-base",
+        "type": "solid"
+      },
+      {
+        "name": "Secondary/Orange/600",
+        "token": "secondary-orange-600",
+        "type": "solid"
+      },
+      {
+        "name": "Secondary/Orange/700",
+        "token": "secondary-orange-700",
+        "type": "solid"
+      },
+      {
+        "name": "Secondary/Orange/800",
+        "token": "secondary-orange-800",
+        "type": "solid"
+      },
+      {
+        "name": "Secondary/Orange/900",
+        "token": "secondary-orange-900",
+        "type": "solid"
+      },
+      {
+        "name": "Neutral/Gray/0",
+        "token": "neutral-gray-0",
+        "type": "solid"
+      },
+      {
+        "name": "Neutral/Gray/50",
+        "token": "neutral-gray-50",
+        "type": "solid"
+      },
+      {
+        "name": "Neutral/Gray/100",
+        "token": "neutral-gray-100",
+        "type": "solid"
+      },
+      {
+        "name": "Neutral/Gray/200",
+        "token": "neutral-gray-200",
+        "type": "solid"
+      },
+      {
+        "name": "Neutral/Gray/300",
+        "token": "neutral-gray-300",
+        "type": "solid"
+      },
+      {
+        "name": "Neutral/Gray/400",
+        "token": "neutral-gray-400",
+        "type": "solid"
+      },
+      {
+        "name": "Neutral/Gray/500",
+        "token": "neutral-gray-500",
+        "type": "solid"
+      },
+      {
+        "name": "Neutral/Gray/600",
+        "token": "neutral-gray-600",
+        "type": "solid"
+      },
+      {
+        "name": "Neutral/Gray/700",
+        "token": "neutral-gray-700",
+        "type": "solid"
+      },
+      {
+        "name": "Neutral/Gray/800",
+        "token": "neutral-gray-800",
+        "type": "solid"
+      },
+      {
+        "name": "Neutral/Gray/900",
+        "token": "neutral-gray-900",
+        "type": "solid"
+      },
+      {
+        "name": "Neutral/Gray/950",
+        "token": "neutral-gray-950",
+        "type": "solid"
+      },
+      {
+        "name": "Neutral/Base/Black",
+        "token": "neutral-base-black",
+        "type": "solid"
+      },
+      {
+        "name": "Neutral/Base/White",
+        "token": "neutral-base-white",
+        "type": "solid"
+      }
+    ],
+    "textStyles": [
+      {
+        "name": "Label/X Small",
+        "token": "label-x-small",
+        "type": "text",
+        "fontFamily": "Mona Sans",
+        "fontWeight": "500",
+        "fontSize": "12px",
+        "lineHeight": "24px",
+        "letterSpacing": "-0.20000000298023224px"
+      },
+      {
+        "name": "Label/Small",
+        "token": "label-small",
+        "type": "text",
+        "fontFamily": "Mona Sans",
+        "fontWeight": "500",
+        "fontSize": "14px",
+        "lineHeight": "24px",
+        "letterSpacing": "-0.20000000298023224px"
+      },
+      {
+        "name": "Label/Medium",
+        "token": "label-medium",
+        "type": "text",
+        "fontFamily": "Mona Sans",
+        "fontWeight": "500",
+        "fontSize": "16px",
+        "lineHeight": "24px",
+        "letterSpacing": "-0.20000000298023224px"
+      },
+      {
+        "name": "Label/Large",
+        "token": "label-large",
+        "type": "text",
+        "fontFamily": "Mona Sans",
+        "fontWeight": "500",
+        "fontSize": "18px",
+        "lineHeight": "24px",
+        "letterSpacing": "-0.20000000298023224px"
+      },
+      {
+        "name": "Label/X Large",
+        "token": "label-x-large",
+        "type": "text",
+        "fontFamily": "Mona Sans",
+        "fontWeight": "500",
+        "fontSize": "20px",
+        "lineHeight": "24px",
+        "letterSpacing": "-0.20000000298023224px"
+      },
+      {
+        "name": "Display/Display 1",
+        "token": "display-display-1",
+        "type": "text",
+        "fontFamily": "Creato Display",
+        "fontWeight": "500",
+        "fontSize": "70px",
+        "lineHeight": "64px",
+        "letterSpacing": "-2%"
+      },
+      {
+        "name": "Display/Display 2",
+        "token": "display-display-2",
+        "type": "text",
+        "fontFamily": "Creato Display",
+        "fontWeight": "500",
+        "fontSize": "56px",
+        "lineHeight": "56px",
+        "letterSpacing": "-2%"
+      },
+      {
+        "name": "Display/Display 3",
+        "token": "display-display-3",
+        "type": "text",
+        "fontFamily": "Creato Display",
+        "fontWeight": "500",
+        "fontSize": "48px",
+        "lineHeight": "56px",
+        "letterSpacing": "-2%"
+      },
+      {
+        "name": "Display/Display 4",
+        "token": "display-display-4",
+        "type": "text",
+        "fontFamily": "Creato Display",
+        "fontWeight": "500",
+        "fontSize": "36px",
+        "lineHeight": "40px",
+        "letterSpacing": "-2%"
+      },
+      {
+        "name": "Heading/Heading 1",
+        "token": "heading-heading-1",
+        "type": "text",
+        "fontFamily": "Creato Display",
+        "fontWeight": "500",
+        "fontSize": "24px",
+        "lineHeight": "28px",
+        "letterSpacing": "-2%"
+      },
+      {
+        "name": "Heading/Heading 2",
+        "token": "heading-heading-2",
+        "type": "text",
+        "fontFamily": "Creato Display",
+        "fontWeight": "500",
+        "fontSize": "18px",
+        "lineHeight": "20px",
+        "letterSpacing": "-2%"
+      },
+      {
+        "name": "Heading/Heading 3",
+        "token": "heading-heading-3",
+        "type": "text",
+        "fontFamily": "Creato Display",
+        "fontWeight": "500",
+        "fontSize": "16px",
+        "lineHeight": "16px",
+        "letterSpacing": "-2%"
+      },
+      {
+        "name": "Heading/Heading 4",
+        "token": "heading-heading-4",
+        "type": "text",
+        "fontFamily": "Creato Display",
+        "fontWeight": "500",
+        "fontSize": "14px",
+        "lineHeight": "16px",
+        "letterSpacing": "-2%"
+      },
+      {
+        "name": "Heading/Subheading 1",
+        "token": "heading-subheading-1",
+        "type": "text",
+        "fontFamily": "Mona Sans",
+        "fontWeight": "500",
+        "fontSize": "16px",
+        "lineHeight": "16px",
+        "letterSpacing": "-2%"
+      },
+      {
+        "name": "Heading/Subheading 2",
+        "token": "heading-subheading-2",
+        "type": "text",
+        "fontFamily": "Mona Sans",
+        "fontWeight": "500",
+        "fontSize": "14px",
+        "lineHeight": "16px",
+        "letterSpacing": "-2%"
+      },
+      {
+        "name": "Body/Body 1",
+        "token": "body-body-1",
+        "type": "text",
+        "fontFamily": "Mona Sans",
+        "fontWeight": "400",
+        "fontSize": "20px",
+        "lineHeight": "24px",
+        "letterSpacing": "-2%"
+      },
+      {
+        "name": "Body/Body 2",
+        "token": "body-body-2",
+        "type": "text",
+        "fontFamily": "Mona Sans",
+        "fontWeight": "400",
+        "fontSize": "18px",
+        "lineHeight": "24px",
+        "letterSpacing": "-2%"
+      },
+      {
+        "name": "Body/Body 3",
+        "token": "body-body-3",
+        "type": "text",
+        "fontFamily": "Mona Sans",
+        "fontWeight": "400",
+        "fontSize": "16px",
+        "lineHeight": "22px",
+        "letterSpacing": "0%"
+      },
+      {
+        "name": "Body/Body 4",
+        "token": "body-body-4",
+        "type": "text",
+        "fontFamily": "Mona Sans",
+        "fontWeight": "400",
+        "fontSize": "14px",
+        "lineHeight": "18px",
+        "letterSpacing": "0%"
+      },
+      {
+        "name": "Body/Body 5",
+        "token": "body-body-5",
+        "type": "text",
+        "fontFamily": "Mona Sans",
+        "fontWeight": "400",
+        "fontSize": "12px",
+        "lineHeight": "16px",
+        "letterSpacing": "0%"
+      }
+    ],
+    "effectStyles": [
+      {
+        "name": "Shadow / sm",
+        "token": "shadow-sm",
+        "type": "effect",
+        "value": "box-shadow: 0px 1px 2px 0px rgba(45, 54, 67, 0.05)",
+        "effects": [
+          {
+            "type": "drop-shadow",
+            "x": 0,
+            "y": 1,
+            "blur": 2,
+            "spread": 0,
+            "color": "rgba(45, 54, 67, 0.05)"
+          }
+        ]
+      },
+      {
+        "name": "Shadow / base",
+        "token": "shadow-base",
+        "type": "effect",
+        "value": "box-shadow: 0px 1px 2px 0px rgba(45, 54, 67, 0.04), 0px 2px 4px 0px rgba(45, 54, 67, 0.08)",
+        "effects": [
+          {
+            "type": "drop-shadow",
+            "x": 0,
+            "y": 1,
+            "blur": 2,
+            "spread": 0,
+            "color": "rgba(45, 54, 67, 0.04)"
+          },
+          {
+            "type": "drop-shadow",
+            "x": 0,
+            "y": 2,
+            "blur": 4,
+            "spread": 0,
+            "color": "rgba(45, 54, 67, 0.08)"
+          }
+        ]
+      },
+      {
+        "name": "Shadow/md",
+        "token": "shadow-md",
+        "type": "effect",
+        "value": "box-shadow: 0px 2px 4px -2px rgba(45, 54, 67, 0.06), 0px 4px 8px -2px rgba(45, 54, 67, 0.08)",
+        "effects": [
+          {
+            "type": "drop-shadow",
+            "x": 0,
+            "y": 2,
+            "blur": 4,
+            "spread": -2,
+            "color": "rgba(45, 54, 67, 0.06)"
+          },
+          {
+            "type": "drop-shadow",
+            "x": 0,
+            "y": 4,
+            "blur": 8,
+            "spread": -2,
+            "color": "rgba(45, 54, 67, 0.08)"
+          }
+        ]
+      },
+      {
+        "name": "Shadow/lg",
+        "token": "shadow-lg",
+        "type": "effect",
+        "value": "box-shadow: 0px 8px 11px -4px rgba(45, 54, 67, 0.04), 0px 20px 24px -4px rgba(45, 54, 67, 0.04)",
+        "effects": [
+          {
+            "type": "drop-shadow",
+            "x": 0,
+            "y": 8,
+            "blur": 11,
+            "spread": -4,
+            "color": "rgba(45, 54, 67, 0.04)"
+          },
+          {
+            "type": "drop-shadow",
+            "x": 0,
+            "y": 20,
+            "blur": 24,
+            "spread": -4,
+            "color": "rgba(45, 54, 67, 0.04)"
+          }
+        ]
+      },
+      {
+        "name": "Shadow/xl",
+        "token": "shadow-xl",
+        "type": "effect",
+        "value": "box-shadow: 0px 24px 50px -12px rgba(45, 54, 67, 0.12)",
+        "effects": [
+          {
+            "type": "drop-shadow",
+            "x": 0,
+            "y": 24,
+            "blur": 50,
+            "spread": -12,
+            "color": "rgba(45, 54, 67, 0.12)"
+          }
+        ]
+      },
+      {
+        "name": "Shadow / 2xl",
+        "token": "shadow-2xl",
+        "type": "effect",
+        "value": "box-shadow: 0px 32px 64px -12px rgba(45, 54, 67, 0.14)",
+        "effects": [
+          {
+            "type": "drop-shadow",
+            "x": 0,
+            "y": 32,
+            "blur": 64,
+            "spread": -12,
+            "color": "rgba(45, 54, 67, 0.14)"
+          }
+        ]
+      }
+    ],
+    "gridStyles": []
+  }
+}
