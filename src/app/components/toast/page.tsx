@@ -1,161 +1,148 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
-import { Toast, ToastState } from '@/app/components/toast/Toast';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { BellRinging, Copy } from '@phosphor-icons/react';
 import PreviewCanvas from '@/components/shared/PreviewCanvas';
 import { useDesignSystem } from '@/context/DesignSystemContext';
+import { notify } from '@/lib/toast';
 import { sounds } from '@/lib/sounds';
-import { Copy, BellRinging } from '@phosphor-icons/react';
+
+type ToastKind = 'loading' | 'success' | 'error';
+
+const MESSAGES: Record<ToastKind, string> = {
+  loading: 'Copying screens...',
+  success: 'Screens copied to clipboard!',
+  error: 'There was an error copying this image. Try again',
+};
+
+// One id, so loading turns into the result in place instead of stacking.
+const TOAST_ID = 'toast-demo';
+
+const SNIPPET = `import { notify } from '@/lib/toast';
+
+async function copyScreens() {
+  const id = notify.loading('Copying screens...');
+  try {
+    await copy();
+    notify.success('Screens copied to clipboard!', id);
+  } catch {
+    notify.error('There was an error copying this image. Try again', id);
+  }
+}`;
 
 export default function ToastPage() {
-  const [toastState, setToastState] = useState<ToastState>(null);
+  const [kind, setKind] = useState<ToastKind | 'idle'>('idle');
   const [isCopying, setIsCopying] = useState(false);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const { 
-    setInspectorContent, 
-    setCustomControls, 
-    setCodeSnippet, 
-    setComponentTitle, 
-    setComponentCategory,
-    setComponentIcon 
-  } = useDesignSystem();
+  const { setInspectorContent, setCustomControls, setCodeSnippet, setComponentTitle, setComponentCategory, setComponentIcon } =
+    useDesignSystem();
 
-  const handleCopyAction = (forcedState?: ToastState) => {
-    if (isCopying && forcedState === undefined) return;
+  const show = useCallback((next: ToastKind) => {
+    notify[next](MESSAGES[next], TOAST_ID);
+    setKind(next);
+  }, []);
 
-    if (timeoutRef.current) clearTimeout(timeoutRef.current);
-
-    if (forcedState !== undefined) {
-      setToastState(forcedState);
-      setIsCopying(forcedState === 'loading');
-      if (forcedState !== 'loading' && forcedState !== 'default') {
-        timeoutRef.current = setTimeout(() => {
-          setToastState(null);
-          setIsCopying(false);
-        }, 4000);
-      }
-      return;
-    }
-
-    setIsCopying(true);
-    setToastState('loading');
+  // The trigger plays the real sequence: loading, then success or (sometimes) an error.
+  const runCopy = () => {
+    if (isCopying) return;
+    if (timer.current) clearTimeout(timer.current);
     sounds.playClick();
-
-    timeoutRef.current = setTimeout(() => {
-      const outcome: ToastState = Math.random() > 0.3 ? 'success' : 'error';
-      setToastState(outcome);
-
-      timeoutRef.current = setTimeout(() => {
-        setToastState(null);
-        setIsCopying(false);
-      }, 4000);
+    setIsCopying(true);
+    show('loading');
+    timer.current = setTimeout(() => {
+      show(Math.random() > 0.3 ? 'success' : 'error');
+      setIsCopying(false);
     }, 1500);
   };
 
-  useEffect(() => {
-    return () => {
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    };
-  }, []);
+  useEffect(
+    () => () => {
+      if (timer.current) clearTimeout(timer.current);
+      notify.dismiss(TOAST_ID);
+    },
+    [],
+  );
 
   useEffect(() => {
-    setComponentTitle('Toast Notifications');
-    setComponentIcon(<BellRinging size={14} strokeWidth={1.5} />);
-    setComponentCategory('Feedback / Toast');
+    setComponentTitle('Toast');
+    setComponentIcon(<BellRinging size={14} />);
+    setComponentCategory('Feedback');
 
     setInspectorContent({
-      title: 'Toast Notifications',
-      description: 'Drop-down notification toast banner with distinct loading, success, and error states.',
+      title: 'Toast',
+      description: 'A small pill at the top of the page that confirms an action. It has loading, success and error states.',
+      guidance: {
+        purpose:
+          'Confirms the result of something the person just did, without interrupting them. It answers "did that work?" and then leaves.',
+        behaviour:
+          'A small pill appears at the top centre of the page. A slow action shows a loading pill first, which then changes in place to success or error. Success leaves on its own after three seconds; an error is tinted red and says what to do next.',
+        usage:
+          'The screen viewer: copying a screen ("Screens copied to clipboard!"), downloading, saving to a tab and removing a saved tab.',
+      },
       propsList: [
-        { prop: 'State', type: 'enum', defaultVal: toastState || 'default' },
-        { prop: 'Duration', type: 'number', defaultVal: '4000ms' },
-      ],
-      compositionNotes: [
-        'Drops down smoothly from the very top center of the canvas right below the header bar.',
-        'Customizer features a dropdown select to preview Default, Loading, Success, and Error states.',
-        'Supports automated randomized sequences on trigger click.'
+        {
+          prop: 'notify.success',
+          type: '(message: string, id?: string | number) => id',
+          defaultVal: '-',
+          description: 'Confirms that something worked. Leaves on its own after three seconds.',
+        },
+        {
+          prop: 'notify.error',
+          type: '(message: string, id?: string | number) => id',
+          defaultVal: '-',
+          description: 'Says what went wrong and what to do next.',
+        },
+        {
+          prop: 'notify.loading',
+          type: '(message: string, id?: string | number) => id',
+          defaultVal: '-',
+          description: 'Stays until replaced. Pass its id to success or error to swap it in place.',
+        },
       ],
     });
 
     setCustomControls(
       <div className="flex flex-col gap-1.5">
-        <span className="text-xs text-zinc-700 dark:text-zinc-300">States</span>
+        <label>State</label>
         <select
-          value={toastState || 'default'}
+          value={kind}
           onChange={(e) => {
-            const val = e.target.value as ToastState;
-            handleCopyAction(val === 'default' ? null : val);
-            sounds.playClick();
+            const next = e.target.value as ToastKind | 'idle';
+            if (timer.current) clearTimeout(timer.current);
+            setIsCopying(false);
+            if (next === 'idle') {
+              notify.dismiss(TOAST_ID);
+              setKind('idle');
+            } else {
+              show(next);
+            }
           }}
-          className="w-full h-[36px] bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-xl px-3 text-xs font-medium text-zinc-800 dark:text-zinc-200 focus:outline-none cursor-pointer"
         >
-          <option value="default">Default (Idle)</option>
+          <option value="idle">Idle</option>
           <option value="loading">Loading</option>
           <option value="success">Success</option>
           <option value="error">Error</option>
         </select>
-      </div>
+      </div>,
     );
 
-    setCodeSnippet(`import { useState } from 'react';
-import { Toast } from '@/app/components/toast/Toast';
+    setCodeSnippet(SNIPPET);
+  }, [kind, show, setInspectorContent, setCustomControls, setCodeSnippet, setComponentTitle, setComponentCategory, setComponentIcon]);
 
-export default function ToastDemo() {
-  const [toastState, setToastState] = useState<'loading' | 'success' | 'error' | null>(null);
-
-  return (
-    <div className="relative">
-      <button 
-        onClick={() => setToastState('success')}
-        className="flex items-center justify-center px-5 py-2.5 gap-2 h-[38px] bg-surface-raised border-[0.5px] border-line rounded-full shadow-sm hover:bg-surface-hover"
-      >
-        <Copy size={18} weight="regular" className="text-fg" />
-      </button>
-
-      <Toast state={toastState} />
-    </div>
-  );
-}`);
-  }, []);
-
-  // return (
-  //   <PreviewCanvas>
-  //     <div className="relative flex flex-col items-center justify-center min-h-[200px] w-full">
-  //       <Toast state={toastState} />
-
-  //       <button
-  //         type="button"
-  //         disabled={isCopying}
-  //         onClick={() => handleCopyAction()}
-  //         className={`flex items-center justify-center px-5 py-2.5 gap-2 h-[38px] bg-surface-raised border-[0.5px] border-line rounded-[100px] shadow-[0px_3px_4px_-1px_rgba(229,229,229,0.07),inset_0px_4px_2px_rgba(232,232,232,0.04),inset_0px_-4px_2px_rgba(255,255,255,0.03)] transition-all ${
-  //           isCopying ? 'opacity-50 cursor-not-allowed' : 'hover:bg-surface-hover cursor-pointer'
-  //         }`}
-  //         aria-label="Copy screens"
-  //       >
-  //         <Copy size={18} weight="regular" className="text-fg" />
-  //       </button>
-  //     </div>
-  //   </PreviewCanvas>
-  // );
   return (
     <PreviewCanvas>
-      <div className="relative w-full h-full flex flex-col items-center justify-center min-h-[250px]">
-        <Toast state={toastState} />
-
-        <button
-          type="button"
-          disabled={isCopying}
-          onClick={() => handleCopyAction()}
-          className={`flex items-center justify-center px-5 py-2.5 gap-2 h-[38px] bg-surface-raised border-[0.5px] border-line rounded-[100px] shadow-[0px_3px_4px_-1px_rgba(229,229,229,0.07),inset_0px_4px_2px_rgba(232,232,232,0.04),inset_0px_-4px_2px_rgba(255,255,255,0.03)] transition-all ${
-            isCopying ? 'opacity-50 cursor-not-allowed' : 'hover:bg-surface-hover cursor-pointer'
-          }`}
-          aria-label="Copy screens"
-        >
-          <Copy size={18} weight="regular" className="text-fg" />
-        </button>
-      </div>
+      <button
+        type="button"
+        disabled={isCopying}
+        onClick={runCopy}
+        aria-label="Copy screens"
+        className={`flex h-[38px] items-center justify-center rounded-full border-[0.5px] border-line bg-surface px-5 shadow-sm transition-[background-color,scale,opacity] duration-150 ${
+          isCopying ? 'cursor-not-allowed opacity-50' : 'cursor-pointer hover:bg-surface-raised active:scale-[0.97]'
+        }`}
+      >
+        <Copy size={18} className="text-fg" />
+      </button>
     </PreviewCanvas>
   );
-
 }

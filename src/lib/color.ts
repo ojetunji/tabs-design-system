@@ -11,7 +11,7 @@ export function rgbToHex([r, g, b]: RGB): string {
   return `#${[r, g, b].map((c) => Math.round(c).toString(16).padStart(2, '0')).join('').toUpperCase()}`;
 }
 
-/** Flattens a translucent colour onto a solid background, e.g. gray-900 at 10% on white. */
+/** Flattens a translucent colour onto a solid background, e.g. night-900 at 10% on white. */
 export function composite(fg: string, alphaPercent: number, bg: string): string {
   const a = alphaPercent / 100;
   const f = hexToRgb(fg);

@@ -1,77 +1,46 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import {
-  MagnifyingGlass,
-  Sun,
-  Moon,
-  SpeakerHigh,
-  SpeakerSlash,
-  ArrowUpRight,
-  Code,
-  GithubLogo,
-  DotsNine,
-} from '@phosphor-icons/react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { GithubLogo, GlobeSimple, List, MagnifyingGlass, SpeakerHigh, SpeakerSlash } from '@phosphor-icons/react';
+import { registry } from '@/lib/registry';
 import { sounds } from '@/lib/sounds';
 import SearchDialog from '@/components/layout/SearchDialog';
+import { colorBySlug } from '@/app/foundations/colors/data';
 
 interface HeaderProps {
-  onToggleCodeSheet?: () => void;
-  isCodeSheetOpen?: boolean;
-  showGrid?: boolean;
-  onToggleGrid?: () => void;
-  soundEnabled?: boolean;
-  onToggleSound?: () => void;
-  isDarkMode?: boolean;
-  onToggleTheme?: () => void;
+  onOpenMenu: () => void;
+  soundEnabled: boolean;
+  onToggleSound: () => void;
 }
 
-function ToolbarButton({
-  label,
-  onClick,
-  isActive = false,
-  children,
-}: {
-  label: string;
-  onClick: () => void;
-  isActive?: boolean;
-  children: React.ReactNode;
-}) {
-  return (
-    <div className="relative group flex items-center justify-center">
-      <button
-        type="button"
-        onClick={onClick}
-        aria-label={label}
-        className={`p-2 rounded-xl transition cursor-pointer ${
-          isActive
-            ? 'bg-zinc-200 dark:bg-zinc-800 text-zinc-900 dark:text-white'
-            : 'hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800/60'
-        }`}
-      >
-        {children}
-      </button>
-      <div
-        aria-hidden="true"
-        className="absolute top-full mt-1.5 hidden group-hover:flex px-2 py-1 bg-zinc-900 text-zinc-100 dark:bg-zinc-100 dark:text-zinc-900 text-[10px] font-medium rounded-md whitespace-nowrap shadow-xl pointer-events-none z-50 border border-zinc-700/20"
-      >
-        {label}
-      </div>
-    </div>
-  );
+const iconButton =
+  'flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-fg-secondary transition-colors hover:bg-fill hover:text-fg cursor-pointer';
+
+/** Breadcrumb trail for the current page: [{ label, href? }]. The last item is the page itself. */
+function useCrumbs() {
+  const pathname = usePathname();
+  if (pathname === '/') return [{ label: 'Start' }, { label: 'Introduction' }];
+
+  const page = registry.find((item) => item.href === pathname);
+  if (page) {
+    const parentPage = page.parent ? registry.find((item) => item.href === page.parent) : undefined;
+    return [{ label: page.section }, ...(parentPage ? [{ label: parentPage.name }] : []), { label: page.name }];
+  }
+
+  // A colour's own page: Foundations / Colour / <name>
+  const parent = registry.find((item) => pathname.startsWith(`${item.href}/`));
+  if (parent) {
+    const slug = pathname.slice(parent.href.length + 1);
+    return [{ label: parent.section }, { label: parent.name, href: parent.href }, { label: colorBySlug(slug)?.name ?? slug }];
+  }
+  return [{ label: 'Tabs Design System' }];
 }
 
-export default function Header({
-  onToggleCodeSheet,
-  isCodeSheetOpen,
-  showGrid = true,
-  onToggleGrid,
-  soundEnabled = true,
-  onToggleSound,
-  isDarkMode = true,
-  onToggleTheme,
-}: HeaderProps) {
+export default function Header({ onOpenMenu, soundEnabled, onToggleSound }: HeaderProps) {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const crumbs = useCrumbs();
 
   // ⌘K / Ctrl+K toggles search from anywhere.
   useEffect(() => {
@@ -87,63 +56,78 @@ export default function Header({
 
   return (
     <>
-      <header className="flex items-center justify-between px-8 py-3.5 bg-transparent z-20 min-h-[60px] select-none">
+      <header className="flex h-14 shrink-0 items-center gap-2 border-b border-line px-3 sm:px-5">
+        <button type="button" onClick={onOpenMenu} aria-label="Open menu" className={`${iconButton} lg:hidden`}>
+          <List size={18} />
+        </button>
+
+        <nav aria-label="Breadcrumb" className="flex min-w-0 items-center gap-2 text-sm">
+          {crumbs.map((crumb, i) => {
+            const isLast = i === crumbs.length - 1;
+            return (
+              <span key={crumb.label} className={`items-center gap-2 ${isLast ? 'flex min-w-0' : 'hidden sm:flex'}`}>
+                {crumb.href ? (
+                  <Link href={crumb.href} className="text-fg-muted transition-colors hover:text-fg">
+                    {crumb.label}
+                  </Link>
+                ) : (
+                  <span className={isLast ? 'truncate font-medium text-fg' : 'text-fg-muted'}>{crumb.label}</span>
+                )}
+                {!isLast && <span className="text-fg-subtle">/</span>}
+              </span>
+            );
+          })}
+        </nav>
+
+        {/* Search field, styled like the one in the Tabs header. */}
+        <button
+          type="button"
+          onClick={() => {
+            setIsSearchOpen(true);
+            sounds.playClick();
+          }}
+          className="ml-auto flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full bg-surface-raised text-sm text-fg-muted transition-colors hover:bg-surface-hover cursor-pointer sm:w-[260px] sm:justify-start sm:px-3.5"
+          aria-label="Search the design system"
+        >
+          <MagnifyingGlass size={16} className="shrink-0 text-fg-secondary" />
+          <span className="hidden sm:inline">Try searching &ldquo;Button&rdquo;&hellip;</span>
+          <kbd className="ml-auto hidden font-sans text-xs text-fg-subtle sm:inline">⌘K</kbd>
+        </button>
+
+        {/* Kept as one tight group so the three read as a set beside the search field. */}
         <div className="flex items-center">
-          <a
-            href="https://github.com/ojetunji/tabs-design-system"
-            target="_blank"
-            rel="noreferrer"
-            className="flex items-center gap-2 px-3 py-1.5 bg-zinc-100 dark:bg-zinc-800/80 border border-zinc-200 dark:border-zinc-700/80 rounded-md text-xs font-medium text-zinc-800 dark:text-zinc-200 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-all cursor-pointer group shadow-xs"
-          >
-            <GithubLogo size={14} weight="regular" className="text-zinc-700 dark:text-zinc-300" />
-            <span>Star on GitHub</span>
-            <ArrowUpRight
-              size={14}
-              className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 text-zinc-500 dark:text-zinc-400"
-            />
-          </a>
-        </div>
+        <a
+          href="https://jointabs.com"
+          target="_blank"
+          rel="noreferrer"
+          aria-label="Visit Tabs"
+          title="Visit Tabs"
+          className={iconButton}
+        >
+          <GlobeSimple size={18} />
+        </a>
 
-        {/* Command toolbar. Theme and sound handlers play their own feedback sound. */}
-        <div className="flex items-center gap-1 text-zinc-500 dark:text-zinc-400">
-          <ToolbarButton
-            label={isCodeSheetOpen ? 'Hide code' : 'View code'}
-            isActive={isCodeSheetOpen}
-            onClick={() => {
-              onToggleCodeSheet?.();
-              sounds.playToggle();
-            }}
-          >
-            <Code size={18} />
-          </ToolbarButton>
+        <button
+          type="button"
+          onClick={onToggleSound}
+          aria-label={soundEnabled ? 'Mute interface sounds' : 'Turn on interface sounds'}
+          aria-pressed={soundEnabled}
+          title={soundEnabled ? 'Mute sounds' : 'Turn on sounds'}
+          className={iconButton}
+        >
+          {soundEnabled ? <SpeakerHigh size={18} /> : <SpeakerSlash size={18} />}
+        </button>
 
-          <ToolbarButton
-            label="Quick search (⌘K)"
-            onClick={() => {
-              setIsSearchOpen(true);
-              sounds.playClick();
-            }}
-          >
-            <MagnifyingGlass size={18} />
-          </ToolbarButton>
-
-          <ToolbarButton
-            label={showGrid ? 'Grid off' : 'Grid on'}
-            onClick={() => {
-              onToggleGrid?.();
-              sounds.playToggle();
-            }}
-          >
-            <DotsNine size={18} />
-          </ToolbarButton>
-
-          <ToolbarButton label={soundEnabled ? 'Mute sound' : 'Sound on'} onClick={() => onToggleSound?.()}>
-            {soundEnabled ? <SpeakerHigh size={18} /> : <SpeakerSlash size={18} />}
-          </ToolbarButton>
-
-          <ToolbarButton label={isDarkMode ? 'Light mode' : 'Dark mode'} onClick={() => onToggleTheme?.()}>
-            {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
-          </ToolbarButton>
+        <a
+          href="https://github.com/ojetunji/tabs-design-system"
+          target="_blank"
+          rel="noreferrer"
+          aria-label="View the source on GitHub"
+          title="Source on GitHub"
+          className={iconButton}
+        >
+          <GithubLogo size={18} />
+        </a>
         </div>
       </header>
 

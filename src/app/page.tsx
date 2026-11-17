@@ -1,103 +1,74 @@
-'use client';
-
-import React, { useEffect } from 'react';
 import Link from 'next/link';
-import { ArrowRight } from '@phosphor-icons/react';
-import { useDesignSystem } from '@/context/DesignSystemContext';
+import { ArrowUpRight, GithubLogo } from '@phosphor-icons/react/dist/ssr';
+import { buttonClass } from '@/app/components/buttons/Button';
 
-export default function DiscoveryPage() {
-  const { setCodeSnippet, setComponentTitle, setComponentCategory } = useDesignSystem();
+const CARDS = [
+  { title: 'Foundations', body: 'Colour and type, as tokens taken from the Tabs designs.', href: '/foundations/colors' },
+  { title: 'Components', body: 'What Tabs ships today, with live controls and the code beside them.', href: '/components/buttons' },
+  { title: 'Tabs', body: 'The product this system is built for: UI patterns from African digital products.', href: 'https://jointabs.com' },
+];
 
-  useEffect(() => {
-    setCodeSnippet('');
-    setComponentTitle('');
-    setComponentCategory('');
-  }, [setCodeSnippet, setComponentTitle, setComponentCategory]);
-
+export default function IntroductionPage() {
   return (
-    <div className="w-full max-w-3xl mx-auto pt-20 pb-28 px-6 md:px-10 space-y-10 text-zinc-900 dark:text-zinc-100 font-sans">
-      {/* Breadcrumb */}
-      <div className="flex items-center gap-2 text-xs text-zinc-500 dark:text-zinc-400">
-        <span>Tabs</span>
-        <span>/</span>
-        <span className="text-zinc-900 dark:text-zinc-100 font-medium">Introduction</span>
-      </div>
-
-      {/* Main Title & Lead */}
-      <div className="space-y-3">
-        <h1 className="text-4xl font-extrabold tracking-tight text-zinc-900 dark:text-zinc-50">
-          Introduction
+    <article className="flex flex-col gap-14">
+      <header className="flex flex-col gap-6 pt-4 sm:pt-8">
+        <h1 className="max-w-[640px] font-display text-[44px] leading-[46px] tracking-[-0.035em] text-fg sm:text-[60px] sm:leading-[60px]">
+          Every pill, tab and toast in Tabs starts here.
         </h1>
-        <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
-          This is the design system behind Tabs. It documents the tokens, typography and components the product ships today, in React, TypeScript and Tailwind, with live controls and copyable code.
-        </p>
-      </div>
-
-      <p className="text-sm text-zinc-900 dark:text-zinc-100 leading-relaxed">
-        Specs, micro-interactions and token details often get lost between Figma and the codebase. Everything here starts from what is live in Tabs, and every new iteration is designed and built in the system first, then shipped to the product.
-      </p>
-
-      {/* Core Philosophy Section */}
-      <div className="space-y-4 pt-2 text-zinc-600 dark:text-zinc-400 leading-relaxed text-sm">
-        <p>
-          Flipping the script by keeping full source control right in the platform. It has taught me how to create systems where design and code speak the exact same language, anchored by some guiding principles:
-        </p>
-
-        <ul className="list-disc pl-5 space-y-2 pt-2">
-          <li>
-            <strong className="text-zinc-900 dark:text-zinc-100 font-semibold">Transparency:</strong> Every component layer is completely open, unstyled, and inspectable right from the code drawer in a way I can understand and tweak as needed. Also allows for easy import and use in other projects.
-          </li>
-          <li>
-            <strong className="text-zinc-900 dark:text-zinc-100 font-semibold">Token-First:</strong> Sizing scales, typography, and layout states map directly back to foundational system variables rather than guessing.
-          </li>
-          <li>
-            <strong className="text-zinc-900 dark:text-zinc-100 font-semibold">Live Testing:</strong> Real-time parameters let me test component variants, scaling metrics, and edge cases instantly on the fly.
-          </li>
-          <li>
-            <strong className="text-zinc-900 dark:text-zinc-100 font-semibold">UX Intent:</strong> The library is informed by real-world product thinking—tailored for constraints, custom views, and user flows.
-          </li>
-        </ul>
-      </div>
-
-      <hr className="border-zinc-200 dark:border-zinc-800 my-8" />
-
-      {/* Platform Anatomy Header */}
-      <div className="space-y-4">
-        <h2 className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50" id="anatomy">
-          Platform Anatomy
-        </h2>
-        <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
-          To make handoffs seamless and keep the feedback loop as tight as possible, this platform is structured around three core areas:
-        </p>
-
-        <div className="space-y-6 pt-2 text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
-          <div>
-            <h3 className="font-semibold text-zinc-900 dark:text-zinc-100 mb-1">1. Navigation Header</h3>
-            <p>Think of this as the command center for the workspace. Toggle background grid, haptic audio feedback, theme, and code inspection on the fly.</p>
-          </div>
-
-          <div>
-            <h3 className="font-semibold text-zinc-900 dark:text-zinc-100 mb-1">2. Live Code Drawer</h3>
-            <p>A sliding drawer that reveals the exact TypeScript (.tsx) implementation and utility classes for whichever component in view.</p>
-          </div>
-
-          <div>
-            <h3 className="font-semibold text-zinc-900 dark:text-zinc-100 mb-1">3. Inspector Panel</h3>
-            <p>An interactive sidebar designed for live-customisation, a playground if you will. Adjust tokens, sizing, and component states/variants in real-time.</p>
-          </div>
+        <div className="flex max-w-[460px] flex-col gap-3 text-[15px] leading-[23px] text-fg-muted">
+          <p>The design system behind Tabs. Tokens, type and components, documented from what the product ships today.</p>
+          <p>Open source. Change a control, watch the component respond, copy the code.</p>
         </div>
+        <div className="flex flex-wrap items-center gap-2 pt-1">
+          <Link href="/components/buttons" className={buttonClass('primary', 'sm')}>
+            See the components
+          </Link>
+          <a
+            href="https://github.com/ojetunji/tabs-design-system"
+            target="_blank"
+            rel="noreferrer"
+            className={buttonClass('secondary', 'sm')}
+          >
+            <GithubLogo size={16} />
+            GitHub
+          </a>
+        </div>
+      </header>
+
+      {/* The Tabs welcome video, compressed to 1280px (about 2 MB). Only the poster loads until someone presses play. */}
+      <div className="overflow-hidden rounded-[28px] bg-surface-subtle">
+        <video
+          controls
+          playsInline
+          preload="none"
+          poster="/video/intro-poster.jpg"
+          aria-label="Welcome to Tabs"
+          className="block aspect-video w-full bg-night-900"
+        >
+          <source src="/video/intro.mp4" type="video/mp4" />
+        </video>
       </div>
 
-      {/* Call to action footer link */}
-      <div className="pt-6">
-        <Link 
-          href="/foundations/typography"
-          className="inline-flex items-center gap-2 text-sm font-semibold text-zinc-900 dark:text-zinc-100 hover:underline"
-        >
-          <span>Get started</span>
-          <ArrowRight weight="bold" className="w-4 h-4" />
-        </Link>
+      <div className="grid gap-3 sm:grid-cols-3">
+        {CARDS.map((card) => {
+          const external = card.href.startsWith('http');
+          return (
+            <Link
+              key={card.title}
+              href={card.href}
+              target={external ? '_blank' : undefined}
+              rel={external ? 'noreferrer' : undefined}
+              className="group flex flex-col gap-1.5 rounded-[22px] border border-line p-5 transition-colors hover:bg-surface-subtle"
+            >
+              <span className="flex items-center justify-between text-sm font-semibold text-fg">
+                {card.title}
+                <ArrowUpRight size={14} className="text-fg-subtle transition-colors group-hover:text-fg" />
+              </span>
+              <span className="text-sm leading-5 text-fg-muted">{card.body}</span>
+            </Link>
+          );
+        })}
       </div>
-    </div>
+    </article>
   );
 }

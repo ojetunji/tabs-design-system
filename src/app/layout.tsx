@@ -1,9 +1,12 @@
 import type { Metadata } from 'next';
+import { JetBrains_Mono } from 'next/font/google';
 import { Toaster } from 'sonner';
 import './globals.css';
 import AppShell from '@/components/layout/AppShell';
 import { DesignSystemProvider } from '@/context/DesignSystemContext';
-import { themeInitScript } from '@/lib/theme';
+
+// Code blocks and token names are set in JetBrains Mono.
+const jetbrainsMono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-jetbrains' });
 
 export const metadata: Metadata = {
   title: {
@@ -16,15 +19,12 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning className="h-full">
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
-      </head>
-      <body className="h-full bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 antialiased selection:bg-zinc-200 dark:selection:bg-zinc-800 overflow-hidden">
+    <html lang="en" className={`h-full ${jetbrainsMono.variable}`}>
+      <body className="h-full bg-surface-subtle text-fg antialiased overflow-hidden">
         <DesignSystemProvider>
           <AppShell>{children}</AppShell>
         </DesignSystemProvider>
-        <Toaster position="bottom-right" richColors />
+        <Toaster position="top-center" />
       </body>
     </html>
   );

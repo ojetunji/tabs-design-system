@@ -72,13 +72,21 @@ export const MultiSelect = ({
     option.label.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const sortedOptions = [...filteredOptions].sort((a, b) => {
-    const aSelected = selectedIds.includes(a.id);
-    const bSelected = selectedIds.includes(b.id);
-    if (aSelected && !bSelected) return -1;
-    if (!aSelected && bSelected) return 1;
-    return 0;
-  });
+  // Selected rows go to the top, but only when the menu opens. Re-sorting on every
+  // click would move the row out from under the pointer.
+  const selectedFirst = () =>
+    [...options].sort((a, b) => Number(selectedIds.includes(b.id)) - Number(selectedIds.includes(a.id))).map((o) => o.id);
+  const [order, setOrder] = useState<string[]>(selectedFirst);
+  const [wasOpen, setWasOpen] = useState(isOpen);
+  if (isOpen !== wasOpen) {
+    setWasOpen(isOpen);
+    if (isOpen) setOrder(selectedFirst());
+  }
+  const rank = (id: string) => {
+    const i = order.indexOf(id);
+    return i === -1 ? order.length : i;
+  };
+  const sortedOptions = [...filteredOptions].sort((a, b) => rank(a.id) - rank(b.id));
 
   const hasSelections = selectedIds.length > 0;
 
@@ -138,7 +146,7 @@ export const MultiSelect = ({
       {isOpen && (
         <div className="multiselect-popover">
           <div className="multiselect-search-wrapper">
-            <MagnifyingGlass size={20} weight="regular" className="text-gray-400 shrink-0" />
+            <MagnifyingGlass size={20} weight="regular" className="text-night-400 shrink-0" />
             <input
               type="text"
               value={searchQuery}
@@ -269,18 +277,22 @@ export const MultiSelect = ({
         }
 
         .multiselect-popover {
+          transform-origin: top center;
           position: absolute;
           top: calc(100% + 8px);
-          left: 0;
-          width: 320px;
+          /* Centred under the button: the button changes width as you select, and a
+             left-anchored menu would slide sideways with it. */
+          left: 50%;
+          translate: -50% 0;
+          width: 360px;
           background: var(--tabs-popover);
           box-shadow: var(--shadow-xl);
           border-radius: 24px;
-          padding: 12px;
+          padding: 16px;
           z-index: 50;
           display: flex;
           flex-direction: column;
-          gap: 12px;
+          gap: 16px;
           overflow-x: hidden; /* Prevent horizontal spill */
           animation: popoverFadeIn 0.15s cubic-bezier(0.16, 1, 0.3, 1);
         }
@@ -299,13 +311,13 @@ export const MultiSelect = ({
         .multiselect-search-wrapper {
           display: flex;
           align-items: center;
-          gap: 12px;
+          gap: 16px;
           width: fill;
-          height: 44px;
-          background: color-mix(in srgb, var(--color-gray-0) 8%, transparent);
-          border: 1px solid var(--color-gray-700);
+          height: 46px;
+          background: color-mix(in srgb, var(--color-paper-0) 8%, transparent);
+          border: 1px solid var(--color-night-700);
           border-radius: 24px;
-          padding: 0 16px;
+          padding: 0 15px;
           flex-shrink: 0;
         }
 
@@ -316,18 +328,18 @@ export const MultiSelect = ({
           border: none;
           outline: none;
           font-size: 14px;
-          color: var(--color-gray-0);
+          color: var(--color-paper-0);
           font-family: var(--font-sans);
         }
 
         .multiselect-search-input::placeholder {
-          color: var(--color-gray-400);
+          color: var(--color-night-400);
         }
 
         .multiselect-section-title {
           font-size: 12px;
           font-weight: 500;
-          color: var(--color-gray-400);
+          color: var(--color-night-400);
           letter-spacing: -0.2px;
           padding-left: 2px;
         }
@@ -382,15 +394,15 @@ export const MultiSelect = ({
         }
 
         .multiselect-option-item.selected {
-          background: var(--color-gray-0);
+          background: var(--color-paper-0);
         }
 
         .multiselect-option-item:not(.selected) {
-          background: color-mix(in srgb, var(--color-gray-0) 4%, transparent);
+          background: color-mix(in srgb, var(--color-paper-0) 4%, transparent);
         }
 
         .multiselect-option-item:not(.selected):hover {
-          background: color-mix(in srgb, var(--color-gray-0) 8%, transparent);
+          background: color-mix(in srgb, var(--color-paper-0) 8%, transparent);
         }
 
         .multiselect-option-item:focus-visible {
@@ -407,11 +419,11 @@ export const MultiSelect = ({
         .multiselect-option-label {
           font-size: 14px;
           font-weight: 500;
-          color: var(--color-gray-900);
+          color: var(--color-night-900);
         }
 
         .multiselect-option-item:not(.selected) .multiselect-option-label {
-          color: var(--color-gray-0);
+          color: var(--color-paper-0);
         }
 
         .multiselect-checkbox {
@@ -421,21 +433,21 @@ export const MultiSelect = ({
           display: flex;
           align-items: center;
           justify-content: center;
-          background: var(--color-gray-900);
-          color: var(--color-gray-0);
+          background: var(--color-night-900);
+          color: var(--color-paper-0);
           transition: all 0.15s ease;
         }
 
         .multiselect-option-item:not(.selected) .multiselect-checkbox {
-          background: var(--color-gray-600);
-          border: 1px solid var(--color-gray-500);
+          background: var(--color-night-600);
+          border: 1px solid var(--color-night-500);
         }
 
         .multiselect-empty {
           padding: 24px;
           text-align: center;
           font-size: 14px;
-          color: var(--color-gray-400);
+          color: var(--color-night-400);
         }
       `}</style>
     </div>

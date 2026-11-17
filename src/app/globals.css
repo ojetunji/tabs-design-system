@@ -33,18 +33,68 @@
 @theme {
   --font-sans: 'Mona Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-display: 'Creato Display', 'Mona Sans', sans-serif;
-}
-
-:root {
-  color-scheme: light;
-}
-
-.dark {
-  color-scheme: dark;
+  --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
 body {
   font-family: var(--font-sans);
   margin: 0;
   padding: 0;
+}
+
+/* Customiser card: one look for every page's controls, whatever classes the page wrote.
+   Unlayered on purpose, so these win over the utility classes on those elements. */
+.customizer label,
+.customizer .customizer-label {
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--tabs-fg-muted);
+}
+
+.customizer span.text-xs {
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--tabs-fg-secondary);
+}
+
+.customizer input[type='text'],
+.customizer input[type='number'],
+.customizer textarea {
+  width: 100%;
+  height: 40px;
+  padding: 0 16px;
+  border-radius: 9999px;
+  border: 1px solid var(--tabs-line);
+  background: var(--tabs-surface);
+  font-size: 14px;
+  color: var(--tabs-fg);
+}
+
+.customizer input[type='text']:focus-visible,
+.customizer input[type='number']:focus-visible,
+.customizer textarea:focus-visible {
+  outline: 2px solid var(--tabs-brand);
+  outline-offset: 1px;
+}
+
+.customizer textarea {
+  height: auto;
+  min-height: 72px;
+  padding: 10px 16px;
+  border-radius: 20px;
+}
+
+/* Honour the system setting: keep state changes, drop the movement. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

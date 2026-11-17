@@ -10,7 +10,7 @@ import {
   GlobeSimple, 
   ArrowUpRight, 
   Link as LinkIcon, 
-  Plus,
+  PlusCircle,
   GearSix,
   Sun,
   Moon,
@@ -36,15 +36,61 @@ function useOutsideClick(ref: React.RefObject<HTMLElement | null>, handler: () =
   }, [ref, handler]);
 }
 
+// Shared pieces of the dark menus, from the Tabs Figma file: a 24px-radius panel
+// with 16px padding, 40px rows, 20px icons and a hairline between groups.
+const menuPanel =
+  'absolute right-0 top-full z-50 mt-[6px] flex origin-top-right flex-col gap-4 rounded-[24px] bg-popover p-4 text-on-popover shadow-xl';
+const menuMotion = {
+  initial: { opacity: 0, y: -6, scale: 0.97 },
+  animate: { opacity: 1, y: 0, scale: 1 },
+  exit: { opacity: 0, y: -6, scale: 0.97 },
+  transition: { type: 'spring', stiffness: 400, damping: 30 },
+} as const;
+
+function MenuRow({
+  icon,
+  trailing,
+  onSelect,
+  children,
+}: {
+  icon?: React.ReactNode;
+  trailing?: React.ReactNode;
+  onSelect: () => void;
+  children: React.ReactNode;
+}) {
+  return (
+    <button
+      type="button"
+      role="menuitem"
+      onClick={onSelect}
+      className="flex h-10 w-full items-center justify-between rounded-[12px] text-left transition-opacity hover:opacity-70 cursor-pointer"
+    >
+      <span className="flex items-center gap-2">
+        {icon}
+        <span className="type-label-small text-on-popover">{children}</span>
+      </span>
+      {trailing}
+    </button>
+  );
+}
+
+const MenuDivider = () => <div className="h-px w-full bg-night-600" />;
+
 // --- VARIANT 1: ICON-ONLY TRIGGER DROPDOWN ---
 export function IconDropdown() {
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   useOutsideClick(ref, () => setIsOpen(false));
 
+  const close = () => {
+    setIsOpen(false);
+    sounds.playClick();
+  };
+
   return (
     <div className="relative inline-block font-sans" ref={ref}>
       <button
+        type="button"
         onClick={() => {
           setIsOpen(!isOpen);
           sounds.playClick();
@@ -52,63 +98,27 @@ export function IconDropdown() {
         aria-label={isOpen ? 'Close menu' : 'Open menu'}
         aria-haspopup="menu"
         aria-expanded={isOpen}
-        className="w-10 h-10 rounded-full bg-surface border border-line flex items-center justify-center text-fg-secondary hover:bg-surface-raised transition-colors cursor-pointer"
+        className="flex h-10 w-10 items-center justify-center rounded-full border border-line bg-surface text-fg-secondary transition-colors hover:bg-surface-raised cursor-pointer"
       >
         <motion.div animate={{ rotate: isOpen ? 90 : 0 }} transition={{ duration: 0.2 }}>
           {isOpen ? <X size={18} weight="bold" /> : <DotsThreeVertical size={18} weight="bold" />}
         </motion.div>
-        {/* {isOpen ? (
-  <CaretUp size={18} className="text-fg-secondary" />
-) : (
-  <CaretDown size={18} className="text-fg-secondary" />
-)} */}
       </button>
 
       <AnimatePresence>
         {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: 4, scale: 0.96 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 4, scale: 0.96 }}
-            transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-            style={{ width: '280px', height: '164px' }}
-            className="bg-popover shadow-xl absolute right-0 mt-[6px] rounded-[24px] p-4 flex flex-col gap-3 z-50 text-white overflow-hidden origin-top"
-          >
-            <div className="flex flex-col gap-1 w-[248px]">
-              {/* Visit website */}
-              <div 
-                onClick={() => { setIsOpen(false); sounds.playClick(); }}
-                className="flex items-center justify-between h-[40px] px-0 rounded-[12px] hover:bg-white/5 transition-colors cursor-pointer"
-              >
-                <div className="flex items-center gap-2">
-                  <GlobeSimple size={20} className="text-gray-300" />
-                  <span className="type-label-small text-white">Visit website</span>
-                </div>
-              </div>
-
-              {/* View in App Store */}
-              <div 
-                onClick={() => { setIsOpen(false); sounds.playClick(); }}
-                className="flex items-center justify-between h-[40px] px-0 rounded-[12px] hover:bg-white/5 transition-colors cursor-pointer"
-              >
-                <div className="flex items-center gap-2">
-                  <ArrowUpRight size={20} className="text-gray-300" />
-                  <span className="type-label-small text-white">View in App Store</span>
-                </div>
-              </div>
-
-              <div className="w-[248px] border-t border-gray-600/30 my-0.5" />
-
-              {/* Copy link */}
-              <div 
-                onClick={() => { setIsOpen(false); sounds.playClick(); }}
-                className="flex items-center justify-between h-[40px] px-0 rounded-[12px] hover:bg-white/5 transition-colors cursor-pointer"
-              >
-                <div className="flex items-center gap-2">
-                  <LinkIcon size={20} className="text-gray-300" />
-                  <span className="type-label-small text-white">Copy link</span>
-                </div>
-              </div>
+          <motion.div role="menu" {...menuMotion} className={`${menuPanel} w-[280px]`}>
+            <div className="flex flex-col gap-1">
+              <MenuRow icon={<GlobeSimple size={20} />} onSelect={close}>
+                Visit website
+              </MenuRow>
+              <MenuRow icon={<ArrowUpRight size={20} />} onSelect={close}>
+                View in App Store
+              </MenuRow>
+              <MenuDivider />
+              <MenuRow icon={<LinkIcon size={20} />} onSelect={close}>
+                Copy link
+              </MenuRow>
             </div>
           </motion.div>
         )}
@@ -120,160 +130,100 @@ export function IconDropdown() {
 // --- VARIANT 2: AVATAR TRIGGER DROPDOWN ---
 export function AvatarDropdown() {
   const [isOpen, setIsOpen] = useState(false);
-  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
   const ref = useRef<HTMLDivElement>(null);
   useOutsideClick(ref, () => setIsOpen(false));
 
+  const close = () => {
+    setIsOpen(false);
+    sounds.playClick();
+  };
+
   return (
     <div className="relative inline-block font-sans" ref={ref}>
-      {/* 32x32px Circular Avatar Trigger */}
-      {/* <button
+      <button
+        type="button"
         onClick={() => {
           setIsOpen(!isOpen);
           sounds.playClick();
         }}
-        className="w-[40px] h-[40px] rounded-full overflow-hidden border border-zinc-700 focus:outline-none cursor-pointer transition-transform active:scale-95"
+        aria-label="Open account menu"
+        aria-haspopup="menu"
+        aria-expanded={isOpen}
+        className="h-10 w-10 overflow-hidden rounded-full transition-transform active:scale-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand cursor-pointer"
       >
-        <div className="w-full h-full bg-brand text-white font-semibold text-xs flex items-center justify-center">
-          HZ
-        </div>
-      </button> */}
-
-<button
-  onClick={() => {
-    setIsOpen(!isOpen);
-    sounds.playClick();
-  }}
-  aria-label="Open account menu"
-  aria-haspopup="menu"
-  aria-expanded={isOpen}
-  className="w-[40px] h-[40px] rounded-full overflow-hidden focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand cursor-pointer transition-transform active:scale-95"
->
-  <img 
-    src="/avatar.png" 
-    alt="User Avatar" 
-    className="w-full h-full object-cover"
-  />
-</button>
+        <img src="/avatar.png" alt="" className="h-full w-full object-cover" />
+      </button>
 
       <AnimatePresence>
         {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: 4, scale: 0.96 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 4, scale: 0.96 }}
-            transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-            style={{ width: '310px', maxHeight: '340px' }}
-            className="bg-popover shadow-xl absolute right-0 mt-[6px] rounded-[24px] p-4 flex flex-col gap-3 z-50 text-white overflow-y-auto origin-top"
-          >
-            {/* Header Profile Info */}
-            <div className="flex items-center gap-3 w-[278px] h-[40px] shrink-0">
-              {/* <div className="w-[40px] h-[40px] rounded-full bg-brand text-white font-semibold text-sm flex items-center justify-center shrink-0">
-                HZ
-              </div> */}
-              <div className="w-[40px] h-[40px] rounded-full overflow-hidden shrink-0 border border-zinc-700">
-    <img src="/avatar.png" alt="User Avatar" className="w-full h-full object-cover" />
-  </div>
-              <div className="flex flex-col justify-center gap-0.5">
-                <span className="type-heading-4 text-white">
-                  Hannah Zighan
-                </span>
-                <span className="type-body-5 text-gray-300">
-                  email@example.com
-                </span>
-              </div>
+          <motion.div role="menu" {...menuMotion} className={`${menuPanel} w-[310px]`}>
+            <div className="flex flex-col gap-1">
+              <span className="type-heading-2 text-on-popover">Hannah Zighan</span>
+              <span className="type-body-5 text-on-popover-muted">email@example.com</span>
             </div>
 
-            {/* Menu List Frame */}
-            <div className="flex flex-col gap-1 w-[278px]">
-              {/* Request an app */}
-              <div 
-                onClick={() => { setIsOpen(false); sounds.playClick(); }}
-                className="flex items-center justify-between h-[36px] px-0 rounded-[12px] hover:bg-white/5 transition-colors cursor-pointer"
-              >
-                <div className="flex items-center gap-2">
-                  <Plus size={18} className="text-gray-300" />
-                  <span className="type-label-small text-white">Request an app</span>
+            <div className="flex flex-col gap-1">
+              <MenuRow icon={<PlusCircle size={20} />} onSelect={close}>
+                Request an app
+              </MenuRow>
+              <MenuRow icon={<GearSix size={20} />} onSelect={close}>
+                Settings
+              </MenuRow>
+              <MenuDivider />
+
+              <div className="flex h-10 items-center justify-between">
+                <span className="type-label-small text-on-popover">Theme</span>
+                <div role="group" aria-label="Theme" className="flex items-center gap-1.5 rounded-full bg-night-700 p-1">
+                  {(
+                    [
+                      ['light', Sun],
+                      ['dark', Moon],
+                    ] as const
+                  ).map(([value, ThemeIcon]) => (
+                    <button
+                      key={value}
+                      type="button"
+                      aria-label={`${value === 'light' ? 'Light' : 'Dark'} theme`}
+                      aria-pressed={theme === value}
+                      onClick={() => {
+                        setTheme(value);
+                        sounds.playClick();
+                      }}
+                      className={`flex h-6 w-6 items-center justify-center rounded-full transition-colors cursor-pointer ${
+                        theme === value ? 'bg-night-800 text-on-popover' : 'text-on-popover-muted hover:text-on-popover'
+                      }`}
+                    >
+                      <ThemeIcon size={18} />
+                    </button>
+                  ))}
                 </div>
               </div>
 
-              {/* Settings */}
-              <div 
-                onClick={() => { setIsOpen(false); sounds.playClick(); }}
-                className="flex items-center justify-between h-[36px] px-0 rounded-[12px] hover:bg-white/5 transition-colors cursor-pointer"
+              <MenuRow onSelect={close}>Pricing</MenuRow>
+              <button
+                type="button"
+                role="menuitem"
+                onClick={close}
+                className="flex h-10 w-full items-center gap-2 rounded-[12px] text-left transition-opacity hover:opacity-70 cursor-pointer"
               >
-                <div className="flex items-center gap-2">
-                  <GearSix size={18} className="text-gray-300" />
-                  <span className="type-label-small text-white">Settings</span>
-                </div>
+                <span className="type-label-small text-on-popover">Changelog</span>
+                <span className="type-label-x-small rounded-full bg-night-700 px-1.5 text-on-popover">New</span>
+              </button>
+              <MenuRow trailing={<ArrowUpRight size={20} />} onSelect={close}>
+                Upload content
+              </MenuRow>
+              <MenuRow onSelect={close}>Log out</MenuRow>
+              <MenuDivider />
+
+              <div className="type-label-x-small flex h-10 items-center gap-3 text-on-popover-muted">
+                <button type="button" onClick={close} className="flex-1 text-left transition-colors hover:text-on-popover cursor-pointer">
+                  Term &amp; Conditions
+                </button>
+                <button type="button" onClick={close} className="flex-1 text-left transition-colors hover:text-on-popover cursor-pointer">
+                  Privacy Policy
+                </button>
               </div>
-
-              <div className="w-full border-t border-gray-600/30 my-1" />
-
-              {/* Theme Toggle */}
-              <div className="flex items-center justify-between h-[36px] px-0">
-                <span className="type-label-small text-white">Theme</span>
-                <div className="flex items-center p-1 bg-gray-700 rounded-full gap-1">
-                  <button
-                    aria-label="Light theme"
-                    aria-pressed={theme === 'light'}
-                    onClick={() => { setTheme('light'); sounds.playClick(); }}
-                    className={`w-[24px] h-[24px] rounded-full flex items-center justify-center transition-colors ${theme === 'light' ? 'bg-gray-800 text-white shadow-sm' : 'text-gray-300'}`}
-                  >
-                    <Sun size={14} />
-                  </button>
-                  <button
-                    aria-label="Dark theme"
-                    aria-pressed={theme === 'dark'}
-                    onClick={() => { setTheme('dark'); sounds.playClick(); }}
-                    className={`w-[24px] h-[24px] rounded-full flex items-center justify-center transition-colors ${theme === 'dark' ? 'bg-gray-800 text-white shadow-sm' : 'text-gray-300'}`}
-                  >
-                    <Moon size={14} />
-                  </button>
-                </div>
-              </div>
-
-              {/* Pricing */}
-              <div 
-                onClick={() => { setIsOpen(false); sounds.playClick(); }}
-                className="flex items-center justify-between h-[36px] px-0 rounded-[12px] hover:bg-white/5 transition-colors cursor-pointer"
-              >
-                <span className="type-label-small text-white">Pricing</span>
-              </div>
-
-              {/* Changelog */}
-              <div 
-                onClick={() => { setIsOpen(false); sounds.playClick(); }}
-                className="flex items-center justify-between h-[36px] px-0 rounded-[12px] hover:bg-white/5 transition-colors cursor-pointer"
-              >
-                <span className="type-label-small text-white">Changelog</span>
-                <span className="px-2 py-0.5 bg-gray-700 text-white text-[12px] font-medium rounded-full">New</span>
-              </div>
-
-              {/* Upload content */}
-              <div 
-                onClick={() => { setIsOpen(false); sounds.playClick(); }}
-                className="flex items-center justify-between h-[36px] px-0 rounded-[12px] hover:bg-white/5 transition-colors cursor-pointer"
-              >
-                <span className="type-label-small text-white">Upload content</span>
-                <ArrowUpRight size={18} className="text-gray-300" />
-              </div>
-
-              <div className="w-full border-t border-gray-600/30 my-1" />
-
-              {/* Log out */}
-              <div 
-                onClick={() => { setIsOpen(false); sounds.playClick(); }}
-                className="flex items-center justify-between h-[36px] px-0 rounded-[12px] hover:bg-error-500/10 transition-colors cursor-pointer text-error-400"
-              >
-                <span className="type-label-small">Log out</span>
-              </div>
-            </div>
-
-            {/* Footer Legal Terms */}
-            <div className="flex items-center justify-between w-[278px] text-[12px] text-gray-300 pt-2 border-t border-gray-600/20 shrink-0">
-              <span className="cursor-pointer hover:underline">Term & Conditions</span>
-              <span className="cursor-pointer hover:underline">Privacy Policy</span>
             </div>
           </motion.div>
         )}
@@ -293,7 +243,7 @@ export function InputDropdown() {
 
   return (
     <div className="w-[320px] flex flex-col font-sans relative" ref={ref}>
-      <label className="text-sm font-medium text-fg-secondary mb-2">Role</label>
+      <label className="type-label-small text-fg mb-1.5">Role</label>
 
       {/* Input field */}
       <button
@@ -304,7 +254,7 @@ export function InputDropdown() {
         aria-haspopup="listbox"
         aria-expanded={isOpen}
         aria-label={`Role: ${selectedRole ?? 'none selected'}`}
-        className={`w-[320px] h-[44px] px-4 bg-surface border rounded-2xl flex items-center justify-between transition-colors cursor-pointer ${
+        className={`w-[320px] h-10 px-4 bg-surface border rounded-[12px] flex items-center justify-between transition-colors cursor-pointer ${
           isOpen ? 'border-line-strong' : 'border-line hover:border-line-hover'
         }`}
       >
@@ -327,9 +277,9 @@ export function InputDropdown() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: 4, scale: 0.98 }}
+            initial={{ opacity: 0, y: -6, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 4, scale: 0.98 }}
+            exit={{ opacity: 0, y: -6, scale: 0.98 }}
             transition={{ type: 'spring', stiffness: 400, damping: 30 }}
             role="listbox"
             aria-label="Role"
@@ -350,7 +300,7 @@ export function InputDropdown() {
                     // If it's already selected, uncheck/revert it to null. Otherwise, select it.
                     setSelectedRole(isSelected ? null : role);
                   }}
-                  className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl transition-colors cursor-pointer ${
+                  className={`w-full flex items-center justify-between h-10 px-3.5 rounded-[10px] transition-colors cursor-pointer ${
                     isSelected ? 'bg-surface-raised' : 'hover:bg-surface-raised/60'
                   }`}
                 >
@@ -360,7 +310,7 @@ export function InputDropdown() {
                       initial={{ scale: 0, opacity: 0 }}
                       animate={{ scale: 1, opacity: 1 }}
                       transition={{ type: 'spring', stiffness: 500, damping: 30 }}
-                      className="w-[22px] h-[22px] bg-brand rounded-full flex items-center justify-center text-white"
+                      className="w-[22px] h-[22px] bg-brand rounded-full flex items-center justify-center text-on-brand"
                     >
                       <Check size={14} weight="bold" />
                     </motion.div>

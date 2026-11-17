@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useId } from 'react';
 import { motion } from 'framer-motion';
 
 export interface TabItem {
@@ -24,6 +24,9 @@ export const Tabs = ({
   variant = 'text',
   disabled = false,
 }: TabsProps) => {
+  // Unique per instance, so two Tabs on one page don't animate into each other.
+  const pillId = useId();
+
   return (
     <div role="tablist" className={`tabs-container ${disabled ? 'disabled' : ''}`}>
       {tabs.map((tab) => {
@@ -42,8 +45,9 @@ export const Tabs = ({
             {/* Absolute sliding background for buttery-smooth motion */}
             {isActive && (
               <motion.div
-                layoutId="activeTabPill"
-                className="absolute inset-0 bg-surface-elevated rounded-full border border-line shadow-[0px_3px_4px_-1px_rgba(229,229,229,0.07),inset_0px_4px_2px_rgba(232,232,232,0.04),inset_0px_-4px_2px_rgba(255,255,255,0.03)] z-0"
+                layoutId={pillId}
+                layoutDependency={activeId}
+                className="absolute inset-0 z-0 rounded-full border border-paper-200 bg-surface"
                 transition={{ type: 'spring', stiffness: 400, damping: 30 }}
               />
             )}
@@ -62,11 +66,9 @@ export const Tabs = ({
           display: flex;
           flex-direction: row;
           align-items: center;
-          /* Zero vertical padding so selection sits flush with the outer track edge */
-          padding: 2px;
-          gap: 4px;
-          height: 42px;
-          background: var(--tabs-surface-raised);
+          height: 40px;
+          background: var(--tabs-surface-subtle);
+          border: 0.5px solid var(--color-paper-200);
           border-radius: 24px;
           font-family: var(--font-sans);
           user-select: none;
@@ -84,7 +86,7 @@ export const Tabs = ({
           flex-direction: row;
           justify-content: center;
           align-items: center;
-          height: 38px;
+          height: 100%;
           border-radius: 100px;
           border: none;
           background: transparent;
@@ -92,14 +94,27 @@ export const Tabs = ({
           font-family: var(--font-sans);
           font-weight: 500;
           font-size: 14px;
+          line-height: 24px;
           letter-spacing: -0.2px;
-          transition: color 0.15s ease;
+          transition: color 0.15s ease, padding 0.2s ease;
           flex-shrink: 0;
         }
 
+        /* The active pill has 15px side padding; inactive labels sit 16px apart, 12px from the track edge. */
         .tab-item.text {
-          padding: 0 16px;
-          min-width: 64px;
+          padding: 0 8px;
+        }
+
+        .tab-item.text.active {
+          padding: 0 15px;
+        }
+
+        .tab-item.text.inactive:first-child {
+          padding-left: 12px;
+        }
+
+        .tab-item.text.inactive:last-of-type {
+          padding-right: 12px;
         }
 
         .tab-item.icon {
@@ -108,15 +123,20 @@ export const Tabs = ({
         }
 
         .tab-item.active {
-          color: var(--tabs-fg);
+          color: var(--color-night-700);
         }
 
         .tab-item.inactive {
-          color: var(--tabs-fg-muted);
+          color: var(--color-night-600);
         }
 
         .tab-item.inactive:hover {
-          color: var(--tabs-fg);
+          color: var(--color-night-700);
+        }
+
+        .tab-item:focus-visible {
+          outline: 2px solid var(--tabs-brand);
+          outline-offset: 2px;
         }
       `}</style>
     </div>

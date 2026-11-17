@@ -199,7 +199,7 @@ export const Input = ({
           background: transparent;
           border: none;
           outline: none;
-          padding: 0 14px;
+          padding: 0 16px;
           font-family: var(--font-sans);
           font-weight: 500;
           font-size: 14px;

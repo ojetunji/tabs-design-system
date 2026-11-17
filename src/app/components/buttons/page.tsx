@@ -1,31 +1,37 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { ArrowCounterClockwise, ArrowUpRight, CursorClick, Sparkle } from '@phosphor-icons/react';
+import { ArrowCounterClockwise, CursorClick, Cube } from '@phosphor-icons/react';
 import PreviewCanvas from '@/components/shared/PreviewCanvas';
 import { useDesignSystem } from '@/context/DesignSystemContext';
 import { sounds } from '@/lib/sounds';
-import { Button, buttonSizes, buttonVariants, type ButtonSize, type ButtonVariant } from './Button';
+import {
+  Button,
+  buttonIconSizes,
+  buttonSizes,
+  buttonVariants,
+  type ButtonIconPosition,
+  type ButtonSize,
+  type ButtonVariant,
+} from './Button';
 
-const SIZE_LABELS: Record<ButtonSize, string> = { xs: 'XSmall', sm: 'Small', md: 'Medium', lg: 'Large' };
+// Names as they appear in the Figma component.
+const SIZE_LABELS: Record<ButtonSize, string> = { xs: 'X Small', sm: 'Small', md: 'Medium', lg: 'Large', xl: 'X Large' };
 const VARIANT_LABELS: Record<ButtonVariant, string> = {
-  solid: 'Solid',
+  primary: 'Primary',
   secondary: 'Secondary',
-  flat: 'Flat',
-  destructive: 'Destructive',
-  destructiveLight: 'Destructive Light',
+  destructive: 'Destructive Primary',
+  'destructive-light': 'Destructive Light',
+  link: 'Link Grey',
 };
-const ICON_SIZES: Record<ButtonSize, number> = { xs: 16, sm: 16, md: 18, lg: 20 };
+type IconOption = 'none' | ButtonIconPosition;
+const ICON_LABELS: Record<IconOption, string> = { none: 'No icon', left: 'Left side', right: 'Right side', only: 'Icon only' };
 const DEFAULT_LABEL = 'Button';
-
-const fieldClass =
-  'w-full bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-xl px-3 py-2.5 text-xs text-zinc-900 dark:text-white focus:outline-none';
-const labelClass = 'text-[12px] font-medium text-zinc-400';
 
 function Toggle({ label, checked, onChange }: { label: string; checked: boolean; onChange: (next: boolean) => void }) {
   return (
     <div className="flex items-center justify-between">
-      <span className="text-xs text-zinc-700 dark:text-zinc-300">{label}</span>
+      <span className="text-xs">{label}</span>
       <button
         type="button"
         role="switch"
@@ -35,12 +41,12 @@ function Toggle({ label, checked, onChange }: { label: string; checked: boolean;
           onChange(!checked);
           sounds.playToggle();
         }}
-        className={`w-9 h-5 flex items-center rounded-full p-1 transition-colors duration-200 cursor-pointer ${
-          checked ? 'bg-brand' : 'bg-zinc-300 dark:bg-zinc-700'
+        className={`flex h-5 w-9 cursor-pointer items-center rounded-full p-1 transition-colors duration-200 ${
+          checked ? 'bg-brand' : 'bg-surface-hover'
         }`}
       >
         <span
-          className={`bg-white w-3.5 h-3.5 rounded-full shadow-md transition-transform duration-200 ${
+          className={`h-3.5 w-3.5 rounded-full bg-white shadow-sm transition-transform duration-200 ease-out ${
             checked ? 'translate-x-4' : 'translate-x-0'
           }`}
         />
@@ -54,34 +60,30 @@ function buildSnippet(o: {
   variant: ButtonVariant;
   size: ButtonSize;
   label: string;
+  icon: IconOption;
   disabled: boolean;
   loading: boolean;
-  leading: boolean;
-  trailing: boolean;
 }) {
-  const icons = [o.leading && 'Sparkle', o.trailing && 'ArrowUpRight'].filter(Boolean);
+  const hasIcon = o.icon !== 'none';
   const props = [
-    o.variant !== 'solid' && `variant="${o.variant}"`,
+    o.variant !== 'primary' && `variant="${o.variant}"`,
     o.size !== 'md' && `size="${o.size}"`,
+    hasIcon && `icon={<Cube size={${buttonIconSizes[o.size]}} />}`,
+    hasIcon && o.icon !== 'left' && `iconPosition="${o.icon}"`,
+    o.icon === 'only' && `aria-label="${o.label}"`,
     o.disabled && 'disabled',
     o.loading && 'loading',
-  ].filter(Boolean);
-  const iconSize = ICON_SIZES[o.size];
-  const children = [
-    o.leading && `<Sparkle size={${iconSize}} />`,
-    o.label,
-    o.trailing && `<ArrowUpRight size={${iconSize}} />`,
-  ].filter(Boolean);
+  ].filter(Boolean) as string[];
 
-  const open = `<Button${props.length ? ` ${props.join(' ')}` : ''}>`;
-  const body =
-    children.length === 1 ? `${open}${children[0]}</Button>` : `${open}\n  ${children.join('\n  ')}\n</Button>`;
+  const multiline = props.join(' ').length > 48;
+  const attrs = props.length === 0 ? '' : multiline ? `\n  ${props.join('\n  ')}\n` : ` ${props.join(' ')}`;
+  const element = o.icon === 'only' ? `<Button${attrs}${multiline ? '' : ' '}/>` : `<Button${attrs}>${o.label}</Button>`;
 
   return [
-    icons.length ? `import { ${icons.join(', ')} } from '@phosphor-icons/react';` : null,
+    hasIcon ? `import { Cube } from '@phosphor-icons/react';` : null,
     `import { Button } from '@/app/components/buttons/Button';`,
     '',
-    body,
+    element,
   ]
     .filter((line) => line !== null)
     .join('\n');
@@ -89,21 +91,14 @@ function buildSnippet(o: {
 
 export default function ButtonsPage() {
   const [size, setSize] = useState<ButtonSize>('md');
-  const [variant, setVariant] = useState<ButtonVariant>('solid');
+  const [variant, setVariant] = useState<ButtonVariant>('primary');
   const [label, setLabel] = useState(DEFAULT_LABEL);
-  const [leading, setLeading] = useState(false);
-  const [trailing, setTrailing] = useState(true);
+  const [icon, setIcon] = useState<IconOption>('none');
   const [disabled, setDisabled] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const {
-    setInspectorContent,
-    setCustomControls,
-    setCodeSnippet,
-    setComponentTitle,
-    setComponentCategory,
-    setComponentIcon,
-  } = useDesignSystem();
+  const { setInspectorContent, setCustomControls, setCodeSnippet, setComponentTitle, setComponentCategory, setComponentIcon } =
+    useDesignSystem();
 
   useEffect(() => {
     setComponentTitle('Button');
@@ -112,18 +107,58 @@ export default function ButtonsPage() {
 
     setInspectorContent({
       title: 'Button',
-      description: 'The button Tabs ships today: five variants, four sizes, with disabled and loading states.',
+      description: 'Starts an action. Five types, five sizes, with an optional icon and disabled and loading states.',
+      guidance: {
+        purpose:
+          'A button starts an action: save, download, upgrade, delete. The type says how much the action matters, so a screen has one Primary button and everything beside it is Secondary or Link Grey.',
+        behaviour:
+          'Hover darkens the fill. Keyboard focus shows a blue outline. Disabled buttons switch to their own lighter colours instead of fading, so they stay readable. While loading, a spinner replaces the label and the button keeps its width.',
+        usage:
+          'Primary: Get Pro in the header, Save to… in the screen viewer, Create account on sign up. Secondary: Download, Cancel, Filter and Choose Plan. Destructive Primary: Delete account in settings. Destructive Light: softer destructive choices in dialogs. Link Grey: low-key text actions such as Clear and Request App in search.',
+      },
       propsList: [
-        { prop: 'variant', type: Object.keys(buttonVariants).join(' | '), defaultVal: 'solid' },
-        { prop: 'size', type: Object.keys(buttonSizes).join(' | '), defaultVal: 'md' },
-        { prop: 'loading', type: 'boolean', defaultVal: 'false' },
-        { prop: 'loadingText', type: 'ReactNode', defaultVal: '-' },
-        { prop: 'disabled', type: 'boolean', defaultVal: 'false' },
-      ],
-      compositionNotes: [
-        'Values mirror the button recipe in the Tabs platform (theme.ts).',
-        'Icons are passed as children, before or after the label.',
-        'Disabled states use their own colours, not reduced opacity.',
+        {
+          prop: 'variant',
+          type: Object.keys(buttonVariants).map((v) => `"${v}"`).join(' | '),
+          defaultVal: '"primary"',
+          description: 'The button type. In Figma these are Primary, Secondary, Destructive Primary, Destructive Light and Link Grey.',
+        },
+        {
+          prop: 'size',
+          type: Object.keys(buttonSizes).map((v) => `"${v}"`).join(' | '),
+          defaultVal: '"md"',
+          description: 'Sets padding and label size. Heights are 36, 40, 44, 46 and 46 pixels.',
+        },
+        {
+          prop: 'icon',
+          type: 'ReactNode',
+          defaultVal: '-',
+          description: 'An icon element shown with the label. Size it with buttonIconSizes[size].',
+        },
+        {
+          prop: 'iconPosition',
+          type: '"left" | "right" | "only"',
+          defaultVal: '"left"',
+          description: 'Where the icon sits. With "only" the label is hidden, so add an aria-label.',
+        },
+        {
+          prop: 'loading',
+          type: 'boolean',
+          defaultVal: 'false',
+          description: 'Shows a spinner and blocks clicks. The button keeps its width, so nothing around it moves.',
+        },
+        {
+          prop: 'loadingText',
+          type: 'ReactNode',
+          defaultVal: '-',
+          description: 'Replaces the label while loading and sits beside the spinner.',
+        },
+        {
+          prop: 'disabled',
+          type: 'boolean',
+          defaultVal: 'false',
+          description: 'Blocks interaction and switches to the disabled colours for the type.',
+        },
       ],
     });
 
@@ -131,9 +166,7 @@ export default function ButtonsPage() {
       <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-1.5">
           <div className="flex items-center justify-between">
-            <label htmlFor="button-label" className={labelClass}>
-              Label
-            </label>
+            <label htmlFor="button-label">Label</label>
             {label !== DEFAULT_LABEL && (
               <button
                 type="button"
@@ -141,43 +174,26 @@ export default function ButtonsPage() {
                   setLabel(DEFAULT_LABEL);
                   sounds.playToggle();
                 }}
-                className="flex items-center gap-1 text-[12px] text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition cursor-pointer"
+                className="flex cursor-pointer items-center gap-1 text-[13px] text-fg-muted transition-colors hover:text-fg"
               >
                 <ArrowCounterClockwise size={12} />
-                <span>Reset</span>
+                Reset
               </button>
             )}
           </div>
-          <input id="button-label" type="text" value={label} onChange={(e) => setLabel(e.target.value)} className={fieldClass} />
+          <input id="button-label" type="text" value={label} onChange={(e) => setLabel(e.target.value)} />
         </div>
 
         <div className="flex flex-col gap-1.5">
-          <label className={labelClass}>Size</label>
-          <select
-            value={size}
-            onChange={(e) => {
-              setSize(e.target.value as ButtonSize);
-              sounds.playClick();
-            }}
-            className={`${fieldClass} cursor-pointer`}
-          >
-            {(Object.keys(buttonSizes) as ButtonSize[]).map((s) => (
-              <option key={s} value={s}>
-                {SIZE_LABELS[s]}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div className="flex flex-col gap-1.5">
-          <label className={labelClass}>Variant</label>
+          <label>Type</label>
           <select
             value={variant}
             onChange={(e) => {
-              setVariant(e.target.value as ButtonVariant);
-              sounds.playClick();
+              const next = e.target.value as ButtonVariant;
+              setVariant(next);
+              // Figma has no icon-only Link Grey.
+              if (next === 'link' && icon === 'only') setIcon('none');
             }}
-            className={`${fieldClass} cursor-pointer`}
           >
             {(Object.keys(buttonVariants) as ButtonVariant[]).map((v) => (
               <option key={v} value={v}>
@@ -187,23 +203,43 @@ export default function ButtonsPage() {
           </select>
         </div>
 
-        <div className="flex flex-col gap-3 pt-2 border-t border-zinc-200 dark:border-zinc-800">
-          <span className={labelClass}>States & icons</span>
+        <div className="flex flex-col gap-1.5">
+          <label>Size</label>
+          <select value={size} onChange={(e) => setSize(e.target.value as ButtonSize)}>
+            {(Object.keys(buttonSizes) as ButtonSize[]).map((s) => (
+              <option key={s} value={s}>
+                {SIZE_LABELS[s]}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className="flex flex-col gap-1.5">
+          <label>Icon</label>
+          <select value={icon} onChange={(e) => setIcon(e.target.value as IconOption)}>
+            {(Object.keys(ICON_LABELS) as IconOption[])
+              .filter((option) => !(variant === 'link' && option === 'only'))
+              .map((option) => (
+                <option key={option} value={option}>
+                  {ICON_LABELS[option]}
+                </option>
+              ))}
+          </select>
+        </div>
+
+        <div className="flex flex-col gap-3 border-t border-line pt-4">
           <Toggle label="Disabled" checked={disabled} onChange={setDisabled} />
           <Toggle label="Loading" checked={loading} onChange={setLoading} />
-          <Toggle label="Leading icon" checked={leading} onChange={setLeading} />
-          <Toggle label="Trailing icon" checked={trailing} onChange={setTrailing} />
         </div>
       </div>,
     );
 
-    setCodeSnippet(buildSnippet({ variant, size, label, disabled, loading, leading, trailing }));
+    setCodeSnippet(buildSnippet({ variant, size, label, icon, disabled, loading }));
   }, [
     size,
     variant,
     label,
-    leading,
-    trailing,
+    icon,
     disabled,
     loading,
     setInspectorContent,
@@ -214,14 +250,19 @@ export default function ButtonsPage() {
     setComponentIcon,
   ]);
 
-  const iconSize = ICON_SIZES[size];
-
   return (
     <PreviewCanvas>
-      <Button variant={variant} size={size} disabled={disabled} loading={loading} onClick={() => sounds.playClick()}>
-        {leading && <Sparkle size={iconSize} className="shrink-0" />}
+      <Button
+        variant={variant}
+        size={size}
+        icon={icon === 'none' ? undefined : <Cube size={buttonIconSizes[size]} className="shrink-0" />}
+        iconPosition={icon === 'none' ? undefined : icon}
+        aria-label={icon === 'only' ? label : undefined}
+        disabled={disabled}
+        loading={loading}
+        onClick={() => sounds.playClick()}
+      >
         {label}
-        {trailing && <ArrowUpRight size={iconSize} className="shrink-0" />}
       </Button>
     </PreviewCanvas>
   );

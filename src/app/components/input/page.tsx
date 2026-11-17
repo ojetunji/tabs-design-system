@@ -31,8 +31,16 @@ export default function InputPage() {
     setComponentCategory(`Form / ${selectedVariant}`);
 
     setInspectorContent({
-      title: 'Input Component',
-      description: 'Robust form controls featuring built-in state validation, dynamic prefix handling, and integrated icon attachments.',
+      title: 'Input',
+      description: 'A text field with a label, help text and an error state.',
+      guidance: {
+        purpose:
+          'Collects one piece of typed information. The label says what is wanted, the help text says why or how, and the error says what to fix.',
+        behaviour:
+          'The border darkens on focus. An error turns the border and the help text red and stays until the value is corrected. Icons, a prefix or a show/hide control can sit inside the field without changing its height.',
+        usage:
+          'Sign up and log in (email, and password with show/hide), Account Settings (first name, last name, email with a mail icon), and the search field in the header.',
+      },
       propsList: [
         { prop: 'Variant', type: 'string', defaultVal: selectedVariant },
         { prop: 'State', type: 'string', defaultVal: inputState },

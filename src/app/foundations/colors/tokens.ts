@@ -51,7 +51,7 @@ function toFamily(group: PaletteGroup, name: string, raw: RawScale): Family {
   for (const [step, hex] of Object.entries(raw)) {
     if (step.startsWith('$')) continue;
     const column =
-      step === 'base' ? BASE_SLOT[group] : step === 'white' ? '0' : step === 'black' ? '950' : step;
+      step === 'base' ? BASE_SLOT[group] : step === 'white' ? '0' : step === 'black' ? '950' : step === 'ink' ? '900' : step;
     cells[column] = { step, hex };
   }
   return { group, name, status: (raw.$status as ScaleStatus) ?? 'figma', cells };
@@ -85,7 +85,7 @@ export function semanticClass(name: string): string {
   return `bg-${name}`;
 }
 
-/** Parses "gray.900" or "gray.900/10". */
+/** Parses "night.900" or "night.900/10". */
 export function parseRef(ref: string) {
   const [path, alpha] = ref.split('/');
   const [family, step] = path.split('.');

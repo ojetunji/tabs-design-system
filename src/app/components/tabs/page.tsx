@@ -52,8 +52,16 @@ export default function TabsPage() {
     setComponentCategory('Navigation / Tabs');
 
     setInspectorContent({
-      title: 'Tabs Component',
-      description: 'Navigation container with layered sections of content and buttery-smooth spring transitions.',
+      title: 'Tabs',
+      description: 'A segmented control for switching between views.',
+      guidance: {
+        purpose:
+          'Switches between views of the same content. Everything stays on one page; only what is shown changes.',
+        behaviour:
+          'One tab is always active, shown as a white pill on a grey track. The pill slides to the tab you choose. Labels can be text or icons; use icons only where space is tight and the meaning is obvious.',
+        usage:
+          'Apps, Screens, UI Elements and User Flows on Explore; the Mobile and Web switch in the header (icons on mobile); Sections and Full Screen in the screen viewer; Account Settings and Subscription & Billing; Monthly and Yearly on pricing.',
+      },
       propsList: [
         { prop: 'Variant', type: 'enum', defaultVal: variant },
         { prop: 'Items Count', type: 'number', defaultVal: String(itemCount) },
