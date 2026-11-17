@@ -5,7 +5,7 @@ import { buttonClass } from '@/app/components/buttons/Button';
 const CARDS = [
   { title: 'Foundations', body: 'Colour and type, as tokens taken from the Tabs designs.', href: '/foundations/colors' },
   { title: 'Components', body: 'What Tabs ships today, with live controls and the code beside them.', href: '/components/buttons' },
-  { title: 'Tabs', body: 'The product this system is built for: UI patterns from African digital products.', href: 'https://jointabs.com' },
+  // { title: 'Tabs', body: 'The product this system is built for: UI patterns from African digital products.', href: 'https://jointabs.com' },
 ];
 
 export default function IntroductionPage() {
@@ -16,8 +16,7 @@ export default function IntroductionPage() {
           Every pill, tab and toast in Tabs starts here.
         </h1>
         <div className="flex max-w-[460px] flex-col gap-3 text-[15px] leading-[23px] text-fg-muted">
-          <p>The design system behind Tabs. Tokens, type and components, documented from what the product ships today.</p>
-          <p>Open source. Change a control, watch the component respond, copy the code.</p>
+          <p>The design system behind Tabs. Tokens, typography and components, documented straight from the live product. Tabs is a library of African digital products, and this system was built to serve it. It’s open source and free to use in your own projects, and contributions are welcome.</p>
         </div>
         <div className="flex flex-wrap items-center gap-2 pt-1">
           <Link href="/components/buttons" className={buttonClass('primary', 'sm')}>

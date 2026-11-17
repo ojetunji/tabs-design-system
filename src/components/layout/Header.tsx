@@ -22,6 +22,7 @@ const iconButton =
 function useCrumbs() {
   const pathname = usePathname();
   if (pathname === '/') return [{ label: 'Start' }, { label: 'Introduction' }];
+  if (pathname === '/changelog') return [{ label: 'Start' }, { label: 'Changelog' }];
 
   const page = registry.find((item) => item.href === pathname);
   if (page) {

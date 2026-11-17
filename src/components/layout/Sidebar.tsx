@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { CaretDown, SidebarSimple } from '@phosphor-icons/react';
 import type { Icon } from '@phosphor-icons/react';
-import { childrenOf, homeItem, sections, type RegistryItem } from '@/lib/registry';
+import { changelogItem, childrenOf, homeItem, sections, type RegistryItem } from '@/lib/registry';
 
 /** The Tabs mark: the blue folder tab from the product's header. */
 export function TabsLogo({ className }: { className?: string }) {
@@ -106,7 +106,13 @@ function NavItem({ item, pathname, isCollapsed, onNavigate }: NavItemProps) {
 }
 
 const groups = [
-  { title: 'Start', items: [{ name: 'Introduction', href: homeItem.href, icon: homeItem.icon }] },
+  {
+    title: 'Start',
+    items: [
+      { name: 'Introduction', href: homeItem.href, icon: homeItem.icon },
+      { name: 'Changelog', href: changelogItem.href, icon: changelogItem.icon },
+    ],
+  },
   ...sections,
 ];
 
@@ -122,7 +128,7 @@ export default function Sidebar({ isCollapsed = false, onToggle, onNavigate }: S
   return (
     <aside
       className={`flex h-full shrink-0 flex-col gap-6 overflow-x-hidden overflow-y-auto py-3 transition-[width,padding] duration-200 ease-out ${
-        isCollapsed ? 'w-[52px] px-2' : 'w-[240px] px-4'
+        isCollapsed ? 'w-[52px] px-2' : 'w-[240px] px-3'
       }`}
     >
       {/* The logo stays put in both states; only the wordmark and the toggle's place change. */}

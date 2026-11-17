@@ -1,6 +1,7 @@
 import type { Icon } from '@phosphor-icons/react';
 import {
   CheckCircle,
+  ClockCounterClockwise,
   CursorClick,
   DotsThreeCircle,
   HouseLine,
@@ -49,6 +50,7 @@ export const registry: RegistryItem[] = [
 export const childrenOf = (href: string) => registry.filter((item) => item.parent === href);
 
 export const homeItem = { name: 'Home', href: '/', icon: HouseLine };
+export const changelogItem = { name: 'Changelog', href: '/changelog', icon: ClockCounterClockwise };
 
 export const sections: { title: RegistrySection; items: RegistryItem[] }[] = (
   ['Foundations', 'Components'] as const

@@ -58,7 +58,8 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
             className="absolute inset-0 bg-black/30"
             onClick={() => setIsMobileOpen(false)}
           />
-          <div className="relative h-full w-[264px] bg-surface-subtle px-3 shadow-xl">
+          {/* The sidebar brings its own padding and width; the drawer only adds the background. */}
+          <div className="relative h-full w-fit bg-surface-subtle shadow-xl">
             <Sidebar onNavigate={() => setIsMobileOpen(false)} />
           </div>
         </div>
