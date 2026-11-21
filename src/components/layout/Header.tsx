@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useSyncExternalStore } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { GithubLogo, GlobeSimple, List, MagnifyingGlass, SpeakerHigh, SpeakerSlash } from '@phosphor-icons/react';
@@ -17,6 +17,11 @@ interface HeaderProps {
 
 const iconButton =
   'flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-fg-secondary transition-colors hover:bg-fill hover:text-fg cursor-pointer';
+
+// The shortcut hint shows ⌘K on Apple devices and Ctrl K elsewhere. The server can't tell, so it renders ⌘K.
+const noopSubscribe = () => () => {};
+const getIsMac = () => /Mac|iPhone|iPad/.test(navigator.userAgent);
+const getIsMacOnServer = () => true;
 
 /** Breadcrumb trail for the current page: [{ label, href? }]. The last item is the page itself. */
 function useCrumbs() {
@@ -41,6 +46,7 @@ function useCrumbs() {
 
 export default function Header({ onOpenMenu, soundEnabled, onToggleSound }: HeaderProps) {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const isMac = useSyncExternalStore(noopSubscribe, getIsMac, getIsMacOnServer);
   const crumbs = useCrumbs();
 
   // ⌘K / Ctrl+K toggles search from anywhere.
@@ -59,7 +65,7 @@ export default function Header({ onOpenMenu, soundEnabled, onToggleSound }: Head
     <>
       <header className="flex h-14 shrink-0 items-center gap-2 border-b border-line px-3 sm:px-5">
         <button type="button" onClick={onOpenMenu} aria-label="Open menu" className={`${iconButton} lg:hidden`}>
-          <List size={18} />
+          <List size={18} aria-hidden />
         </button>
 
         <nav aria-label="Breadcrumb" className="flex min-w-0 items-center gap-2 text-sm">
@@ -90,9 +96,9 @@ export default function Header({ onOpenMenu, soundEnabled, onToggleSound }: Head
           className="ml-auto flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full bg-surface-raised text-sm text-fg-muted transition-colors hover:bg-surface-hover cursor-pointer sm:w-[260px] sm:justify-start sm:px-3.5"
           aria-label="Search the design system"
         >
-          <MagnifyingGlass size={16} className="shrink-0 text-fg-secondary" />
+          <MagnifyingGlass size={16} aria-hidden className="shrink-0 text-fg-secondary" />
           <span className="hidden sm:inline">Try searching &ldquo;Button&rdquo;&hellip;</span>
-          <kbd className="ml-auto hidden font-sans text-xs text-fg-subtle sm:inline">⌘K</kbd>
+          <kbd className="ml-auto hidden font-sans text-xs text-fg-subtle sm:inline">{isMac ? '⌘K' : 'Ctrl\u00a0K'}</kbd>
         </button>
 
         {/* Kept as one tight group so the three read as a set beside the search field. */}
@@ -105,7 +111,7 @@ export default function Header({ onOpenMenu, soundEnabled, onToggleSound }: Head
           title="Visit Tabs"
           className={iconButton}
         >
-          <GlobeSimple size={18} />
+          <GlobeSimple size={18} aria-hidden />
         </a>
 
         <button
@@ -116,7 +122,7 @@ export default function Header({ onOpenMenu, soundEnabled, onToggleSound }: Head
           title={soundEnabled ? 'Mute sounds' : 'Turn on sounds'}
           className={iconButton}
         >
-          {soundEnabled ? <SpeakerHigh size={18} /> : <SpeakerSlash size={18} />}
+          {soundEnabled ? <SpeakerHigh size={18} aria-hidden /> : <SpeakerSlash size={18} aria-hidden />}
         </button>
 
         <a
@@ -127,7 +133,7 @@ export default function Header({ onOpenMenu, soundEnabled, onToggleSound }: Head
           title="Source on GitHub"
           className={iconButton}
         >
-          <GithubLogo size={18} />
+          <GithubLogo size={18} aria-hidden />
         </a>
         </div>
       </header>

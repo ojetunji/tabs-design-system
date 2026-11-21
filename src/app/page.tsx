@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ArrowUpRight, GithubLogo } from '@phosphor-icons/react/dist/ssr';
+import { ArrowRight, ArrowUpRight, GithubLogo } from '@phosphor-icons/react/dist/ssr';
 import { buttonClass } from '@/app/components/buttons/Button';
 
 const CARDS = [
@@ -8,19 +8,22 @@ const CARDS = [
   // { title: 'Tabs', body: 'The product this system is built for: UI patterns from African digital products.', href: 'https://jointabs.com' },
 ];
 
+/** The product name. Marked so browser translation leaves it alone ("Tabs" is also an ordinary word). */
+const Tabs = () => <span translate="no">Tabs</span>;
+
 export default function IntroductionPage() {
   return (
     <article className="flex flex-col gap-14">
       <header className="flex flex-col gap-6 pt-4 sm:pt-8">
-        <h1 className="max-w-[640px] font-display text-[44px] leading-[46px] tracking-[-0.035em] text-fg sm:text-[60px] sm:leading-[60px]">
-          Every pill, tab and toast in Tabs starts here.
+        <h1 className="max-w-[640px] text-balance font-display text-[44px] leading-[46px] tracking-[-0.035em] text-fg sm:text-[60px] sm:leading-[60px]">
+          Every pill, tab and toast in <Tabs /> starts here.
         </h1>
         <div className="flex max-w-[460px] flex-col gap-3 text-[15px] leading-[23px] text-fg-muted">
-          <p>The design system behind Tabs. Tokens, typography and components, documented straight from the live product. Tabs is a library of African digital products, and this system was built to serve it. It’s open source and free to use in your own projects, and contributions are welcome.</p>
+          <p>The design system behind <Tabs />. Tokens, typography and components, documented straight from the live product. <Tabs /> is a library of African digital products, and this system was built to serve it. It’s open source and free to use in your own projects, and contributions are welcome.</p>
         </div>
         <div className="flex flex-wrap items-center gap-2 pt-1">
           <Link href="/components/buttons" className={buttonClass('primary', 'sm')}>
-            See the components
+            Start exploring
           </Link>
           <a
             href="https://github.com/ojetunji/tabs-design-system"
@@ -28,7 +31,7 @@ export default function IntroductionPage() {
             rel="noreferrer"
             className={buttonClass('secondary', 'sm')}
           >
-            <GithubLogo size={16} />
+            <GithubLogo size={16} aria-hidden />
             GitHub
           </a>
         </div>
@@ -48,9 +51,11 @@ export default function IntroductionPage() {
         </video>
       </div>
 
-      <div className="grid gap-3 sm:grid-cols-3">
+      <div className="grid gap-3 sm:grid-cols-2">
         {CARDS.map((card) => {
           const external = card.href.startsWith('http');
+          // Up-right means "leaves the site"; pages on this site get a plain arrow.
+          const Arrow = external ? ArrowUpRight : ArrowRight;
           return (
             <Link
               key={card.title}
@@ -61,7 +66,7 @@ export default function IntroductionPage() {
             >
               <span className="flex items-center justify-between text-sm font-semibold text-fg">
                 {card.title}
-                <ArrowUpRight size={14} className="text-fg-subtle transition-colors group-hover:text-fg" />
+                <Arrow size={14} aria-hidden className="text-fg-subtle transition-colors group-hover:text-fg" />
               </span>
               <span className="text-sm leading-5 text-fg-muted">{card.body}</span>
             </Link>
