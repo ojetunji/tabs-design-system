@@ -20,7 +20,7 @@ export function TabsLogo({ className }: { className?: string }) {
 }
 
 const rowBase =
-  'flex h-9 items-center gap-2.5 overflow-hidden rounded-full px-[9.5px] text-sm whitespace-nowrap transition-[color,background-color,width] duration-200 ease-out';
+  'flex h-9 items-center gap-2.5 overflow-hidden rounded-full px-[9.5px] text-sm whitespace-nowrap transition-[color,background-color,width] duration-200 ease-out focus-visible:outline-offset-[-2px]';
 // The active item is the white pill from the Tabs segmented control.
 const rowActive = 'bg-surface font-medium text-fg shadow-sm';
 const rowIdle = 'text-fg-secondary hover:bg-fill hover:text-fg';
@@ -56,7 +56,7 @@ function NavItem({ item, pathname, isCollapsed, onNavigate }: NavItemProps) {
             isActive ? rowActive : hasChildren && isWithin ? 'font-medium text-fg hover:bg-fill' : rowIdle
           }`}
         >
-          <ItemIcon size={17} weight={isWithin ? 'fill' : 'regular'} className="shrink-0" />
+          <ItemIcon size={17} weight={isWithin ? 'fill' : 'regular'} aria-hidden className="shrink-0" />
           <span className={`truncate transition-opacity duration-150 ${isCollapsed ? 'opacity-0' : 'opacity-100'}`}>
             {item.name}
           </span>
@@ -69,9 +69,9 @@ function NavItem({ item, pathname, isCollapsed, onNavigate }: NavItemProps) {
             aria-label={`${isOpen ? 'Hide' : 'Show'} ${item.name} pages`}
             // While you are on one of its pages the group stays open, so the caret has nothing to close.
             disabled={isWithin}
-            className="absolute right-1 flex h-7 w-7 items-center justify-center rounded-full text-fg-muted transition-colors not-disabled:hover:bg-fill not-disabled:hover:text-fg not-disabled:cursor-pointer"
+            className="absolute right-1 flex h-7 w-7 focus-visible:outline-offset-[-2px] items-center justify-center rounded-full text-fg-muted transition-colors not-disabled:hover:bg-fill not-disabled:hover:text-fg not-disabled:cursor-pointer"
           >
-            <CaretDown size={13} weight="bold" className={`transition-transform duration-200 ease-out ${isOpen ? 'rotate-180' : ''}`} />
+            <CaretDown size={13} weight="bold" aria-hidden className={`transition-transform duration-200 ease-out ${isOpen ? 'rotate-180' : ''}`} />
           </button>
         )}
       </div>
@@ -89,7 +89,7 @@ function NavItem({ item, pathname, isCollapsed, onNavigate }: NavItemProps) {
                     href={child.href}
                     onClick={onNavigate}
                     aria-current={isChildActive ? 'page' : undefined}
-                    className={`flex h-8 items-center rounded-full px-3 text-sm whitespace-nowrap transition-colors ${
+                    className={`flex h-8 items-center rounded-full px-3 text-sm whitespace-nowrap transition-colors focus-visible:outline-offset-[-2px] ${
                       isChildActive ? rowActive : rowIdle
                     }`}
                   >
@@ -152,7 +152,7 @@ export default function Sidebar({ isCollapsed = false, onToggle, onNavigate }: S
             aria-expanded={!isCollapsed}
             className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-fg-muted transition-colors hover:bg-fill hover:text-fg cursor-pointer"
           >
-            <SidebarSimple size={17} />
+            <SidebarSimple size={17} aria-hidden />
           </button>
         )}
       </div>

@@ -36,10 +36,24 @@
   --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
+/* Taps fire straight away instead of waiting to see if a double-tap zoom follows. */
+html {
+  touch-action: manipulation;
+}
+
 body {
   font-family: var(--font-sans);
   margin: 0;
   padding: 0;
+}
+
+/* One focus ring for every link and button that doesn't bring its own.
+   In the base layer, so a component's own focus-visible utilities still win. */
+@layer base {
+  :where(a, button, summary, [tabindex]:not([tabindex='-1'])):focus-visible {
+    outline: 2px solid var(--tabs-brand);
+    outline-offset: 2px;
+  }
 }
 
 /* Customiser card: one look for every page's controls, whatever classes the page wrote.

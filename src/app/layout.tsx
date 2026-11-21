@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { JetBrains_Mono } from 'next/font/google';
 import { Toaster } from 'sonner';
 import './globals.css';
@@ -15,6 +15,12 @@ export const metadata: Metadata = {
   },
   description:
     'The open-source design system behind Tabs: tokens, typography and React components with live controls and copyable code.',
+};
+
+// Matches the page background (surface-subtle, Paper 50). Add a dark value once dark mode is switched on.
+export const viewport: Viewport = {
+  themeColor: '#F7F7F7',
+  colorScheme: 'light',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

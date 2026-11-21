@@ -26,6 +26,22 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
     mainRef.current?.scrollTo({ top: 0 });
   }, [pathname]);
 
+  // The mobile drawer: focus moves into it on open, Escape closes it, and focus goes back where it was.
+  const drawerRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!isMobileOpen) return;
+    const returnTo = document.activeElement as HTMLElement | null;
+    drawerRef.current?.querySelector<HTMLElement>('a, button')?.focus();
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setIsMobileOpen(false);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      returnTo?.focus();
+    };
+  }, [isMobileOpen]);
+
   const soundEnabled = useSyncExternalStore(sounds.subscribe, getSoundEnabled, getSoundEnabledOnServer);
 
   const toggleSound = () => {
@@ -40,6 +56,14 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="flex h-screen w-full gap-2 overflow-hidden p-2 lg:gap-3 lg:p-3">
+      {/* First stop for the keyboard: jumps past the sidebar and header. Hidden until focused. */}
+      <a
+        href="#main"
+        className="sr-only z-50 rounded-full bg-surface text-sm font-medium text-fg shadow-md focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:px-4 focus:py-2"
+      >
+        Skip to content
+      </a>
+
       <div className="hidden lg:block">
         <Sidebar
           isCollapsed={isCollapsed}
@@ -51,7 +75,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
       </div>
 
       {isMobileOpen && (
-        <div className="fixed inset-0 z-40 lg:hidden">
+        <div className="fixed inset-0 z-40 overscroll-contain lg:hidden">
           <button
             type="button"
             aria-label="Close menu"
@@ -59,7 +83,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
             onClick={() => setIsMobileOpen(false)}
           />
           {/* The sidebar brings its own padding and width; the drawer only adds the background. */}
-          <div className="relative h-full w-fit bg-surface-subtle shadow-xl">
+          <div ref={drawerRef} className="relative h-full w-fit overscroll-contain bg-surface-subtle shadow-xl">
             <Sidebar onNavigate={() => setIsMobileOpen(false)} />
           </div>
         </div>
@@ -74,7 +98,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
           soundEnabled={soundEnabled}
           onToggleSound={toggleSound}
         />
-        <main ref={mainRef} className="flex-1 overflow-y-auto">
+        <main id="main" tabIndex={-1} ref={mainRef} className="flex-1 overflow-y-auto overscroll-contain outline-none">
           <div className="mx-auto w-full max-w-[960px] px-5 pb-24 pt-8 sm:px-10 sm:pt-12">{children}</div>
         </main>
       </div>

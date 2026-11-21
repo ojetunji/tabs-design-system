@@ -16,6 +16,19 @@ export interface ChangelogEntry {
 /** Newest first. Add an entry at the top when you ship something. */
 export const ENTRIES: ChangelogEntry[] = [
   {
+    date: '2026-11-21',
+    title: 'More accessible, everywhere',
+    kind: 'Improved',
+    note: [
+      'We checked the site against the Web Interface Guidelines and fixed what we found. Focus rings on every link and button, a Skip to content link, and icons that screen readers no longer read aloud.',
+    ],
+    otherFixes: [
+      'The mobile menu closes with Escape and returns you to where you were.',
+      'The search hint shows Ctrl K on Windows.',
+    ],
+    href: '/',
+  },
+  {
     date: '2026-11-17',
     title: 'Colour, accessible by default',
     kind: 'Improved',
